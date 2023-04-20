@@ -4,7 +4,7 @@ CREATE TABLE users(
     last_name varchar(100) not null,
     email varchar(100) not null,
     password text not null,
-    user_type smallint not null,
+    user_type varchar(10) not null,
     cpf varchar(11),
     oab varchar(8)
 );
