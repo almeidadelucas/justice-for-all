@@ -1,7 +1,9 @@
 package com.justice.justiceforall.dto.command;
 
 import com.justice.justiceforall.entity.UserType;
+import lombok.With;
 
+@With
 public record CreateUserCommand(
     String firstName,
     String lastName,
@@ -11,5 +13,4 @@ public record CreateUserCommand(
     String cpf,
     String oab
 ) {
-
 }
