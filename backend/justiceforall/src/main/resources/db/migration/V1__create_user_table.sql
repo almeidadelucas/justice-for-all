@@ -8,3 +8,5 @@ CREATE TABLE users(
     cpf varchar(11),
     oab varchar(8)
 );
+
+INSERT INTO users VALUES(1, 'Admin', 'Account', 'admin@email.com', 'password', 'ADMIN', null, null);
