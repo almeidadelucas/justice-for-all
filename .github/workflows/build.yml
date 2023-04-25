@@ -3,7 +3,7 @@ name: build
 on: [push]
 
 jobs:
-  build:
+  build-backend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,19 +15,24 @@ jobs:
           distribution: 'zulu'
           cache: 'maven'
 
-      - name: Build Back-End
+      - name: Build
         run: mvn -f backend/justiceforall clean install -DskipTests
 
-      - name: Run tests for Back-End
+      - name: Run tests
         run: mvn -f backend/justiceforall test
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Build Front-End
+      - name: Build
         run: npm i --prefix frontend/
 
-      - name: Run tests for Front-End
+      - name: Run tests
         run: npm t --prefix frontend/
