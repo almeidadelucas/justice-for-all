@@ -1,0 +1,33 @@
+name: build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+          cache: 'maven'
+
+      - name: Build Back-End
+        run: mvn -f backend/justiceforall clean install -DskipTests
+
+      - name: Run tests for Back-End
+        run: mvn -f backend/justiceforall test
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Build Frontend
+        run: npm build --prefix frontend/
+
+      - name: Run tests for Front-End
+        run: npm t --prefix frontend/
