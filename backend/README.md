@@ -40,7 +40,7 @@
 4. Para verificar se o serviço está rodando corretamente, basta chamar o endpoint ```GET http://localhost:8080/actuator/health``` e verificar se a mensagem abaixo é exibida:
 
     ```
-    cd backend
+    {"status":"UP"}
     ```
 
 ## Usuário inicial 
