@@ -26,8 +26,8 @@ jobs:
         with:
           node-version: 18
 
-      - name: Build Frontend
-        run: npm build --prefix frontend/
+      - name: Build Front-End
+        run: npm i --prefix frontend/
 
       - name: Run tests for Front-End
         run: npm t --prefix frontend/
