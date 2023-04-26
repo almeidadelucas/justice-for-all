@@ -25,12 +25,12 @@
 1. Iniciar as dependências do serviço Spring Boot (ex: banco de dados Postgres):
    
     ```
-    docker compose -f justiceforall/docker/compose.yml -p justice-for-all-compose up -d
+    docker compose -f docker/compose.yml -p justice-for-all-compose up -d
     ```
 2. Construir a imagem da aplicação Spring Boot (pode demorar um pouco):
 
     ```
-    docker build -t justice-for-all-spring-app ./justiceforall
+    docker build -t justice-for-all-spring-app .
     ```
 3. Iniciar o Container do serviço Backend:
 

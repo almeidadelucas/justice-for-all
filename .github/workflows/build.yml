@@ -16,10 +16,10 @@ jobs:
           cache: 'maven'
 
       - name: Build
-        run: mvn -f backend/justiceforall clean install -DskipTests
+        run: mvn -f backend/ clean install -DskipTests
 
       - name: Run tests
-        run: mvn -f backend/justiceforall test
+        run: mvn -f backend/ test
 
   build-frontend:
     runs-on: ubuntu-latest
