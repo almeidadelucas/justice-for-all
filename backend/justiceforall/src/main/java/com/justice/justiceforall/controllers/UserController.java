@@ -1,5 +1,7 @@
 package com.justice.justiceforall.controllers;
 
+import com.justice.justiceforall.annotation.EndpointAuthentication;
+import com.justice.justiceforall.config.AuthenticationType;
 import com.justice.justiceforall.dto.User;
 import com.justice.justiceforall.dto.command.CreateUserCommand;
 import com.justice.justiceforall.service.UserService;
@@ -24,6 +26,7 @@ public class UserController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
+  @EndpointAuthentication(authenticationType = AuthenticationType.NOT_AUTHENTICATED)
   public final User createUser(@RequestBody CreateUserCommand createUserCommand) {
     logger.info("Received a request to create a new user of type {}", createUserCommand.type());
     return userService.createUser(createUserCommand);
