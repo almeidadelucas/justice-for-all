@@ -1,5 +1,5 @@
 CREATE TABLE users(
-	  user_id serial primary key,
+    user_id serial primary key,
     first_name varchar(30) not null,
     last_name varchar(100) not null,
     email varchar(100) not null,
@@ -8,3 +8,5 @@ CREATE TABLE users(
     cpf varchar(11),
     oab varchar(8)
 );
+
+INSERT INTO users VALUES(1, 'Admin', 'Account', 'admin@email.com', 'password', 'ADMIN', null, null);

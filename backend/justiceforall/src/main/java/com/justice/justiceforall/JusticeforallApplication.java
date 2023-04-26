@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class JusticeforallApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(JusticeforallApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(JusticeforallApplication.class, args);
+  }
 
 }
