@@ -22,7 +22,11 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
       Object handler) {
-    if (!endpointHasAuthenticationEnabled((HandlerMethod) handler)) {
+    try {
+      if (!endpointHasAuthenticationEnabled((HandlerMethod) handler)) {
+        return true;
+      }
+    } catch (Exception e) {
       return true;
     }
     var authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
