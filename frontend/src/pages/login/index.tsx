@@ -30,8 +30,13 @@ export default function Login() {
 		password: '',
 	});
 
-	const handleChange = (key: keyof IUser, value: string) => {
-		setUser({ ...user, [key]: value });
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+		const fieldName =  event.target.name;
+		const fieldValue = event.target.value;
+		setUser(current => ({
+			...current,
+			[fieldName]: fieldValue
+		}));
 	};
 
 	const validate = () => {
@@ -45,10 +50,31 @@ export default function Login() {
 		return true;
 	};
 
+	const encodeUserAndPassword = () => {
+		return Buffer.from(`${user.email}:${user.password}`).toString('base64');
+	};
+
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		if (validate()) {
-			alert('Faz o login');
+			fetch('http://localhost:8080/login', {
+				method: 'POST',
+				headers: {
+					Authorization: `Basic ${encodeUserAndPassword()}`
+				}
+			})
+				.then(res => {
+					if (res.status === 204) {
+						push('/');
+						// add token to localStorage
+					} else {
+						alert('Usuário ou senha incorretos');
+					}
+				})
+				.catch(err => {
+					alert('Erro ao autenticar');
+					console.error('Error to authenticate: ', err.message);
+				});
 		}
 	};
 
@@ -84,17 +110,20 @@ export default function Login() {
 					>
 						<TextField
 							label="Email"
+							name="email"
 							required
 							variant="standard"
 							error={!!errors.email}
-							onChange={(event) => handleChange('email', event.target.value)}
+							helperText={errors.email}
+							onChange={handleChange}
 						/>
 						<TextField
 							label="Senha"
+							name="password"
 							required
 							type="password"
 							variant="standard"
-							onChange={(event) => handleChange('password', event.target.value)}
+							onChange={handleChange}
 						/>
 					</Box>
 					<Box
