@@ -15,7 +15,7 @@ public class ConfigInterceptor implements WebMvcConfigurer {
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(authenticationInterceptor).excludePathPatterns("/actuator/**");
+  registry.addInterceptor(authenticationInterceptor).excludePathPatterns("/actuator/**", "/error");
   }
 
   @Override
