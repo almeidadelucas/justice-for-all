@@ -11,14 +11,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class CPFValidatorTests {
 
-  //cpf correto -> não da exception
-  //cpf invalido -> levanta exception
-  //formato errado -> levanta exception
-  //  
-
   @Test
   void ensureACorrectCPFDoesNotThrowExceptionsWhenValidating() {
-    var correctCpf = "24275465423";
+    var correctCpf = "72169247114";
     assertDoesNotThrow(() -> CPFValidator.validate(correctCpf, UserType.CLIENT));
   }
 
