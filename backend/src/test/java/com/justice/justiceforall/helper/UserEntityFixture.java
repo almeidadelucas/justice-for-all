@@ -15,7 +15,7 @@ public class UserEntityFixture {
         "Email@email.com",
         "password",
         UserType.CLIENT,
-        "10439284154",
+        "32227526726",
         null
     );
   }
@@ -28,7 +28,7 @@ public class UserEntityFixture {
         "Email@email.com",
         "password",
         UserType.CLIENT,
-        "10439284154",
+        "32227526726",
         null
     );
   }

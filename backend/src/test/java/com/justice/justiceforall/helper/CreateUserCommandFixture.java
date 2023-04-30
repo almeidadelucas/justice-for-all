@@ -14,7 +14,7 @@ public class CreateUserCommandFixture {
         "Email@email.com",
         "password",
         UserType.CLIENT,
-        "10439284154",
+        "32227526726",
         null
     );
   }

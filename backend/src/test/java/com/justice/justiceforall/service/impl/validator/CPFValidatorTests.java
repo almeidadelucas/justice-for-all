@@ -13,13 +13,20 @@ public class CPFValidatorTests {
 
   @Test
   void ensureACorrectCPFDoesNotThrowExceptionsWhenValidating() {
-    var correctCpf = "19438274839";
+    var correctCpf = "72169247114";
     assertDoesNotThrow(() -> CPFValidator.validate(correctCpf, UserType.CLIENT));
   }
 
   @ParameterizedTest
-  @ValueSource(strings = {"35938201-21", "4938576982", "123456789101"})
+  @ValueSource(strings = {"35938201-21", "4938576982", "123456789101", "123"})
   void ensureABadFormattedCPFThrowsAnException(String invalidCpf) {
+    assertThrows(InvalidUserFieldException.class,
+        () -> CPFValidator.validate(invalidCpf, UserType.CLIENT));
+  }
+
+  @ParameterizedTest
+  @ValueSource(strings = {"24836425646", "19438274839", "35938201212"})
+  void ensureInvalidCPFWithCorrectFormattingThrowsAnException(String invalidCpf) {
     assertThrows(InvalidUserFieldException.class,
         () -> CPFValidator.validate(invalidCpf, UserType.CLIENT));
   }
