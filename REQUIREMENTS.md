@@ -18,3 +18,21 @@ Conforme dito anteriormente, a técnica utilizada para a elicitação de requisi
 
 5. Tendo os três requisitos mais prioritários, consideramos esses como os próximos épicos que deveriam ser desenvolvidos para nosso sistema. Assim, continuamos com o desenvolvimento do projeto criando uma *Issue* para cada um desses requisitos.
 
+**Board do Brainstorming:**
+
+![Board do Brainstorming](brainstorming.png)
+
+**Requisitos escolhidos por ordem de prioridade**
+
+![Requisitos Elicitados](features_prioritarias.png)
+
+
+## Requisitos Prioritários
+
+Conforme exibido na imagem anterior, os três requisitos que foram escolhidos priorizados com base no valor que agregarão ao projeto foram:
+
+1. **Criação do Domínio de Casos.** Esse requisito diz respeito à permitir com que cada cliente consiga cadastrar um caso no sistema, de modo que, futuramente, um advogado possa analisá-lo e pegá-lo se houver algum interesse. Esse requisito empatou com o abaixo, mas escolhemos priorizá-lo pois consideramos que, no momento atual da aplicação, o requisito abaixo (Match entre caso e advogado) não agregaria nenhum valor à solução final caso a criação do domínio de casos não fosse desenvolvida uma vez que, para realizar o *match* de casos, é preciso que cada cliente consiga pelo menos cadastrar o caso que deseja obter uma ajuda de um advogado.
+
+2. **Match entre caso e advogado.** Esse requisito é basicamente planejado para permitir com que um advogado e um cliente façam um "acordo" para que o caso comece a ser trabalhado por um advogado. Em outras palavras, seria a funcionalidade de um advogado aceitar algum caso aberto por um cliente.
+
+3. **Sugestão de casos para o advogado.** Esse requisito busca tornar a experiência do advogado na seleção de casos mais natural, permitindo com que alguns casos ainda abertos sejam sugeridos à ele.
