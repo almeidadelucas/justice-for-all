@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FormEvent, useState, useContext } from 'react';
 import styled from '@emotion/styled';
 import { TextField, Box, Typography, Button } from '@mui/material';
 import { useRouter } from 'next/router';
-import { FormEvent, useState } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 interface IUser {
 	email: string;
@@ -19,6 +19,7 @@ const EMAIL_REGEX =
 	/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export default function Login() {
+	const { login } = useContext(AuthContext);
 	const { push } = useRouter();
 
 	const [user, setUser] = useState<IUser>({
@@ -50,31 +51,15 @@ export default function Login() {
 		return true;
 	};
 
-	const encodeUserAndPassword = () => {
-		return Buffer.from(`${user.email}:${user.password}`).toString('base64');
-	};
-
-	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		if (validate()) {
-			fetch('http://localhost:8080/login', {
-				method: 'POST',
-				headers: {
-					Authorization: `Basic ${encodeUserAndPassword()}`
-				}
-			})
-				.then(res => {
-					if (res.status === 204) {
-						push('/');
-						// add token to localStorage
-					} else {
-						alert('Usuário ou senha incorretos');
-					}
-				})
-				.catch(err => {
-					alert('Erro ao autenticar');
-					console.error('Error to authenticate: ', err.message);
-				});
+			const loggedIn = await login(user.email, user.password);
+			if (!loggedIn) {
+				alert('Usuário ou senha incorretos');
+			} else {
+				push('/');
+			}
 		}
 	};
 
@@ -136,7 +121,7 @@ export default function Login() {
 						<Button type="submit" variant="outlined">
 							Login
 						</Button>
-						<Button variant="text" onClick={() => push('/singIn')}>
+						<Button variant="text" onClick={() => push('/signup')}>
 							Criar uma conta
 						</Button>
 					</Box>
