@@ -6,12 +6,12 @@ import com.justice.justiceforall.dto.command.CreateUserCommand;
 import com.justice.justiceforall.entity.UserEntity;
 import com.justice.justiceforall.repository.UsersRepository;
 import com.justice.justiceforall.service.UserService;
-import com.justice.justiceforall.service.impl.validator.CPFValidator;
-import com.justice.justiceforall.service.impl.validator.EmailValidator;
-import com.justice.justiceforall.service.impl.validator.FirstNameValidator;
-import com.justice.justiceforall.service.impl.validator.LastNameValidator;
-import com.justice.justiceforall.service.impl.validator.OABValidator;
-import com.justice.justiceforall.service.impl.validator.PasswordValidator;
+import com.justice.justiceforall.service.impl.validators.CPFValidator;
+import com.justice.justiceforall.service.impl.validators.EmailValidator;
+import com.justice.justiceforall.service.impl.validators.FirstNameValidator;
+import com.justice.justiceforall.service.impl.validators.LastNameValidator;
+import com.justice.justiceforall.service.impl.validators.OABValidator;
+import com.justice.justiceforall.service.impl.validators.PasswordValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,19 +32,10 @@ public class UserServiceImpl implements UserService {
         createUserCommand.type(),
         createUserCommand.email()
     );
-    validateCreateUserCommand(createUserCommand);
+    CreateUserValidator.validateNewUser(createUserCommand);
     var savedEntity = usersRepository.save(getUserEntity(createUserCommand));
     logger.info("Created a new User with ID {}", savedEntity.getId());
     return getUserFromEntity(savedEntity);
-  }
-
-  private void validateCreateUserCommand(CreateUserCommand createUserCommand) {
-    FirstNameValidator.validate(createUserCommand.firstName());
-    LastNameValidator.validate(createUserCommand.lastName());
-    EmailValidator.validate(createUserCommand.email());
-    PasswordValidator.validate(createUserCommand.password());
-    CPFValidator.validate(createUserCommand.cpf(), createUserCommand.type());
-    OABValidator.validate(createUserCommand.oab(), createUserCommand.type());
   }
 
   private UserEntity getUserEntity(CreateUserCommand createUserCommand) {
