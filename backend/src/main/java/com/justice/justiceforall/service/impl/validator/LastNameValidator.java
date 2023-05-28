@@ -1,14 +1,16 @@
 package com.justice.justiceforall.service.impl.validator;
 
+import com.justice.justiceforall.dto.command.CreateUserCommand;
 import com.justice.justiceforall.exception.InvalidUserFieldException;
-import lombok.experimental.UtilityClass;
 
-@UtilityClass
-public class LastNameValidator {
+public class LastNameValidator extends BaseUserCreatorHandler {
 
-  public void validate(String lastName) {
-    if (lastName == null || lastName.length() < 2 || lastName.length() >= 100) {
-      throw new InvalidUserFieldException("The Last Name has an invalid format");
+    @Override
+    public void validate(CreateUserCommand input) {
+        String lastName = input.lastName();
+        if (lastName == null || lastName.length() < 2 || lastName.length() >= 100) {
+            throw new InvalidUserFieldException("The Last Name has an invalid format");
+        }
+        toNext(input);
     }
-  }
 }

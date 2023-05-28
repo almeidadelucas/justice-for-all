@@ -35,7 +35,7 @@ public class UserServiceImplTests {
 
   @Test
   void ensureTheUsersRepositoryIsProperlyCalledWhenCreatingAUser() {
-    var createUserCommand = CreateUserCommandFixture.correctCommand();
+    var createUserCommand = CreateUserCommandFixture.correctClientCommand();
     when(usersRepository.save(any())).thenReturn(UserEntityFixture.userWithId());
     var response = userService.createUser(createUserCommand);
     verify(usersRepository, times(1)).save(UserEntityFixture.userWithoutId());
