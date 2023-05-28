@@ -1,4 +1,4 @@
-package com.justice.justiceforall.service.impl.validators;
+package com.justice.justiceforall.service.impl.validator;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;

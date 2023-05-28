@@ -1,9 +1,8 @@
-package com.justice.justiceforall.service.impl.validators;
+package com.justice.justiceforall.service.impl.validator;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.justice.justiceforall.entity.UserType;
 import com.justice.justiceforall.exception.InvalidUserFieldException;
 import com.justice.justiceforall.helper.CreateUserCommandFixture;
 import org.junit.jupiter.api.Test;

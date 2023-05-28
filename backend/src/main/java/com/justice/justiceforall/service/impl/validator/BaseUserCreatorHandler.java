@@ -1,4 +1,4 @@
-package com.justice.justiceforall.service.impl.validators;
+package com.justice.justiceforall.service.impl.validator;
 
 import com.justice.justiceforall.dto.command.CreateUserCommand;
 
