@@ -10,7 +10,7 @@ Atualmente, o projeto está dividido em dois grandes containers: O Front-End (ap
 ### Arquitetura C4 (Nível 3 - Componentes)
 A arquitetura C4 em nível de componentes pode ser visualizada abaixo, juntamente com uma descrição sobre os principais componentes:
 
-![Arquitetura C4](diagramac4.jpg)
+![Arquitetura C4](diagramaArquitetura.jpg)
 
 ### Estilo de Arquitetura
 TODO: Adicionar
