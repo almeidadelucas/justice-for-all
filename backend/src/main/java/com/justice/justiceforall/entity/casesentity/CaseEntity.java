@@ -47,4 +47,10 @@ public class CaseEntity {
   @Column(nullable = false, length = 120)
   private String evidenceImage;
 
+  @Column(nullable = false, length = 120)
+  private String caseIdentifier;
+
+  @Column(nullable = false)
+  private boolean open;
+
 }
