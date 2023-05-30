@@ -1,9 +1,9 @@
-package com.justice.justiceforall.service.impl;
+package com.justice.justiceforall.service.authenticationservice;
 
-import com.justice.justiceforall.dto.AuthenticationResponse;
-import com.justice.justiceforall.entity.UserEntity;
+import com.justice.justiceforall.dto.userdto.AuthenticationResponse;
+import com.justice.justiceforall.entity.userentity.UserEntity;
 import com.justice.justiceforall.repository.UsersRepository;
-import com.justice.justiceforall.service.AuthService;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import org.slf4j.Logger;

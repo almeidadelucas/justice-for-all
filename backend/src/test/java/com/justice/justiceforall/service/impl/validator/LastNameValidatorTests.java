@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.justice.justiceforall.exception.InvalidUserFieldException;
 import com.justice.justiceforall.helper.CreateUserCommandFixture;
+import com.justice.justiceforall.service.userservice.uservalidator.LastNameValidator;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

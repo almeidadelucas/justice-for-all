@@ -1,11 +1,11 @@
-package com.justice.justiceforall.service.impl;
+package com.justice.justiceforall.service.userservice;
 
 import com.justice.justiceforall.controllers.UserController;
-import com.justice.justiceforall.dto.User;
-import com.justice.justiceforall.dto.command.CreateUserCommand;
-import com.justice.justiceforall.entity.UserEntity;
+import com.justice.justiceforall.dto.userdto.CreateUserCommand;
+import com.justice.justiceforall.dto.userdto.User;
+import com.justice.justiceforall.entity.userentity.UserEntity;
 import com.justice.justiceforall.repository.UsersRepository;
-import com.justice.justiceforall.service.UserService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

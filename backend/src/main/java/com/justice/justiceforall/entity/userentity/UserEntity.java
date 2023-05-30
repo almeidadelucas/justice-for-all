@@ -1,4 +1,4 @@
-package com.justice.justiceforall.entity;
+package com.justice.justiceforall.entity.userentity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

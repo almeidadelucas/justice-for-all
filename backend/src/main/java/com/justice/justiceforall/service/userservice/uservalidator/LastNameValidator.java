@@ -1,6 +1,6 @@
-package com.justice.justiceforall.service.impl.validator;
+package com.justice.justiceforall.service.userservice.uservalidator;
 
-import com.justice.justiceforall.dto.command.CreateUserCommand;
+import com.justice.justiceforall.dto.userdto.CreateUserCommand;
 import com.justice.justiceforall.exception.InvalidUserFieldException;
 
 public class LastNameValidator extends BaseUserCreatorHandler {

@@ -1,6 +1,6 @@
-package com.justice.justiceforall.dto;
+package com.justice.justiceforall.dto.userdto;
 
-import com.justice.justiceforall.entity.UserType;
+import com.justice.justiceforall.entity.userentity.UserType;
 
 public record User(
     long userId,

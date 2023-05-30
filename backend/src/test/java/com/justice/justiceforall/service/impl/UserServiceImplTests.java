@@ -7,13 +7,14 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.justice.justiceforall.dto.command.CreateUserCommand;
+import com.justice.justiceforall.dto.userdto.CreateUserCommand;
 import com.justice.justiceforall.exception.InvalidUserFieldException;
 import com.justice.justiceforall.helper.CreateUserCommandFixture;
 import com.justice.justiceforall.helper.UserEntityFixture;
 import com.justice.justiceforall.helper.UserFixture;
 import com.justice.justiceforall.repository.UsersRepository;
-import com.justice.justiceforall.service.UserService;
+import com.justice.justiceforall.service.userservice.UserService;
+
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

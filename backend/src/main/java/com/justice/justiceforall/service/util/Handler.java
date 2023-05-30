@@ -1,4 +1,4 @@
-package com.justice.justiceforall.service.impl.validator;
+package com.justice.justiceforall.service.util;
 
 public interface Handler<T> {
 

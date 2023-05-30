@@ -1,4 +1,4 @@
-package com.justice.justiceforall.entity;
+package com.justice.justiceforall.entity.userentity;
 
 public enum UserType {
   ADMIN,

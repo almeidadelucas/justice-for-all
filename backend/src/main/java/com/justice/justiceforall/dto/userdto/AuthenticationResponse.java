@@ -1,4 +1,4 @@
-package com.justice.justiceforall.dto;
+package com.justice.justiceforall.dto.userdto;
 
 public record AuthenticationResponse(
     boolean isAuthorized,

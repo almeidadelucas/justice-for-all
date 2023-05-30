@@ -1,6 +1,7 @@
-package com.justice.justiceforall.dto.command;
+package com.justice.justiceforall.dto.userdto;
 
-import com.justice.justiceforall.entity.UserType;
+import com.justice.justiceforall.entity.userentity.UserType;
+
 import lombok.With;
 
 @With

@@ -1,13 +1,14 @@
-package com.justice.justiceforall.service.impl;
+package com.justice.justiceforall.service.userservice;
 
 
-import com.justice.justiceforall.dto.command.CreateUserCommand;
-import com.justice.justiceforall.service.impl.validator.CPFValidator;
-import com.justice.justiceforall.service.impl.validator.EmailValidator;
-import com.justice.justiceforall.service.impl.validator.FirstNameValidator;
-import com.justice.justiceforall.service.impl.validator.LastNameValidator;
-import com.justice.justiceforall.service.impl.validator.OABValidator;
-import com.justice.justiceforall.service.impl.validator.PasswordValidator;
+import com.justice.justiceforall.dto.userdto.CreateUserCommand;
+import com.justice.justiceforall.service.userservice.uservalidator.CPFValidator;
+import com.justice.justiceforall.service.userservice.uservalidator.EmailValidator;
+import com.justice.justiceforall.service.userservice.uservalidator.FirstNameValidator;
+import com.justice.justiceforall.service.userservice.uservalidator.LastNameValidator;
+import com.justice.justiceforall.service.userservice.uservalidator.OABValidator;
+import com.justice.justiceforall.service.userservice.uservalidator.PasswordValidator;
+
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

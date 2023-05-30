@@ -1,7 +1,8 @@
 package com.justice.justiceforall.helper;
 
-import com.justice.justiceforall.dto.command.CreateUserCommand;
-import com.justice.justiceforall.entity.UserType;
+import com.justice.justiceforall.dto.userdto.CreateUserCommand;
+import com.justice.justiceforall.entity.userentity.UserType;
+
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

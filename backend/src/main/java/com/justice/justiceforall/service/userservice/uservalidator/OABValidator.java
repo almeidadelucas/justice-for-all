@@ -1,7 +1,7 @@
-package com.justice.justiceforall.service.impl.validator;
+package com.justice.justiceforall.service.userservice.uservalidator;
 
-import com.justice.justiceforall.dto.command.CreateUserCommand;
-import com.justice.justiceforall.entity.UserType;
+import com.justice.justiceforall.dto.userdto.CreateUserCommand;
+import com.justice.justiceforall.entity.userentity.UserType;
 import com.justice.justiceforall.exception.InvalidUserFieldException;
 
 public class OABValidator extends BaseUserCreatorHandler {

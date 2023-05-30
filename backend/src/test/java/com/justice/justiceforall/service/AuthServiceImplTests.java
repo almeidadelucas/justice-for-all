@@ -9,6 +9,8 @@ import static org.mockito.Mockito.when;
 import com.justice.justiceforall.helper.AuthenticationResponseFixture;
 import com.justice.justiceforall.helper.UserEntityFixture;
 import com.justice.justiceforall.repository.UsersRepository;
+import com.justice.justiceforall.service.authenticationservice.AuthService;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import org.junit.jupiter.api.Test;
