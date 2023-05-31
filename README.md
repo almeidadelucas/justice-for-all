@@ -7,13 +7,16 @@ A ideia pode abranger, ou ser exclusiva também,  uma plataforma de agendamento 
 ## Arquitetura do Projeto
 Atualmente, o projeto está dividido em dois grandes containers: O Front-End (aplicação em React e Typescript) e Back-end (aplicação em Java e Spring).
 
+### Estilo de Arquitetura
+
+Optamos por seguir dois estilos na construção da arquitetura, um para o backend e outro para o frontend. Os estilos escolhidos foram:
+1. `REST` para o backend: Essa escolha foi feita pois esse estilo é amplamente conhecido e utilizado. Com esse estilo seremos capazes e mapear as nossas operações de CRUD para solicitações HTTP de uma maneira simples e padronizada.
+2. `Atomic Design` para o frontend: Escolhemos esse estilo pois ele permite que reutilizemos diversos componentes da nossa aplicação. Ele consiste em dividir os componentes em átomos (a menor unidade possível), moléculas (conjuntos de átomos) e organismos (conjunto de moléculas).
+
 ### Arquitetura C4 (Nível 3 - Componentes)
 A arquitetura C4 em nível de componentes pode ser visualizada abaixo, juntamente com uma descrição sobre os principais componentes:
 
 ![Arquitetura C4](diagramaArquitetura.jpg)
-
-### Estilo de Arquitetura
-TODO: Adicionar
 
 ### Descrição dos principais componentes
 
