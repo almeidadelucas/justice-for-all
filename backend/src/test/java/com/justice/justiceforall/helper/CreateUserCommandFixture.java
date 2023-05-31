@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class CreateUserCommandFixture {
 
-  public CreateUserCommand correctCommand() {
+  public CreateUserCommand correctClientCommand() {
     return new CreateUserCommand(
         "First Name",
         "Last Name",
@@ -19,27 +19,39 @@ public class CreateUserCommandFixture {
     );
   }
 
+  public CreateUserCommand correctLawyerCommand() {
+    return new CreateUserCommand(
+            "First Name",
+            "Last Name",
+            "Email@email.com",
+            "password",
+            UserType.LAWYER,
+            null,
+            "AB123456"
+    );
+  }
+
   public CreateUserCommand commandWithInvalidFirstName() {
-    return correctCommand().withFirstName("a");
+    return correctClientCommand().withFirstName("a");
   }
 
   public CreateUserCommand commandWithInvalidLastName() {
-    return correctCommand().withLastName("a");
+    return correctClientCommand().withLastName("a");
   }
 
   public CreateUserCommand commandWithInvalidEmail() {
-    return correctCommand().withEmail("email.com");
+    return correctClientCommand().withEmail("email.com");
   }
 
   public CreateUserCommand commandWithInvalidPassword() {
-    return correctCommand().withPassword("pass");
+    return correctClientCommand().withPassword("pass");
   }
 
   public CreateUserCommand commandWithInvalidCPF() {
-    return correctCommand().withCpf("123").withType(UserType.CLIENT);
+    return correctClientCommand().withCpf("123").withType(UserType.CLIENT);
   }
 
   public CreateUserCommand commandWithInvalidOAB() {
-    return correctCommand().withOab("ab23").withType(UserType.LAWYER);
+    return correctClientCommand().withOab("ab23").withType(UserType.LAWYER);
   }
 }

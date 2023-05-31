@@ -27,7 +27,7 @@ public class UserControllerTests {
 
   @Test
   void ensureTheControllerCallsTheServiceMethod() {
-    var createUserCommand = CreateUserCommandFixture.correctCommand();
+    var createUserCommand = CreateUserCommandFixture.correctClientCommand();
     var user = UserFixture.correctUser();
     when(userService.createUser(any())).thenReturn(user);
     var response = userController.createUser(createUserCommand);

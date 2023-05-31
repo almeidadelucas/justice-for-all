@@ -1,5 +1,8 @@
+import { withAuth } from '@/components/templates/Auth';
 import React from 'react';
 
-export default function Home() {
+function Home() {
 	return <>Justice for all</>;
 }
+
+export default withAuth(Home);
