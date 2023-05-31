@@ -1,4 +1,4 @@
-import { withAuth } from '@/components/Auth';
+import { withAuth } from '@/components/templates/Auth';
 import React from 'react';
 
 function Home() {
