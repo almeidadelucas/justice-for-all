@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "cases")
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Builder
 @EqualsAndHashCode

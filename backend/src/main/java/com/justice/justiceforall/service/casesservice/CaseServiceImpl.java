@@ -1,6 +1,9 @@
 package com.justice.justiceforall.service.casesservice;
 
 
+import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +19,8 @@ import com.justice.justiceforall.repository.CasesRepository;
 public class CaseServiceImpl implements CaseService {
 
   @Autowired
-  private CasesRepository CasesRepository;
-
+  private CasesRepository casesRepository;
+  
   private final Logger logger = LoggerFactory.getLogger(CaseController.class);
 
   @Override
@@ -28,11 +31,38 @@ public class CaseServiceImpl implements CaseService {
         createCaseCommand.category()
     );
     CreateCaseValidator.validateNewCase(createCaseCommand);
-    var savedEntity = CasesRepository.save(getCaseEntity(createCaseCommand));
+    var savedEntity = casesRepository.save(getCaseEntity(createCaseCommand));
     logger.info("Created a new Case with ID {}", savedEntity.getId());
     return getCaseFromEntity(savedEntity);
   }
 
+  @Override
+  public Case getCaseById(Long id) {
+    Optional<CaseEntity> caseEntityOptional = casesRepository.findById(id);
+    if (caseEntityOptional.isPresent()) {
+      CaseEntity caseEntity = caseEntityOptional.get();
+      return getCaseFromEntity(caseEntity);
+    }
+    return null;
+  }
+
+  @Override
+  public Case[] getAllCases() {
+    List<CaseEntity> caseEntities = casesRepository.findAll();
+    return caseEntities.stream()
+            .map(this::getCaseFromEntity)
+            .toArray(Case[]::new);
+  }
+
+  @Override
+  public Case getCaseByCategory(String category) {
+    CaseEntity caseEntity = casesRepository.findByCategory(category);
+    if (caseEntity != null) {
+      return getCaseFromEntity(caseEntity);
+    }
+    return null;
+  }
+  
   private CaseEntity getCaseEntity(CreateCaseCommand createCaseCommand) {
     return CaseEntity.builder()
         .title(createCaseCommand.title())
@@ -47,7 +77,19 @@ public class CaseServiceImpl implements CaseService {
   }
 
   private Case getCaseFromEntity(CaseEntity entity) {
-    return new Case(0, null, null, null, null, null, null, false);
+    return new Case(
+    		entity.getId(),
+    		entity.getTitle(),
+    		entity.getCategory(),
+    		entity.getDescription(),
+    		entity.getAlegation(),
+    		entity.getEvidencesPdf(),
+    		entity.getEvidenceImage(),
+    		entity.getEvidenceImage(),
+    		entity.isOpen()
+    		);
   }
+
+
 }
 

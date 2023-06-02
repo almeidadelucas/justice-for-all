@@ -8,7 +8,8 @@ public record Case(
     String category,
     String description,
     Alegation alegation,
-    String evicendesPDF,
+    String evidencesPDF,
+    String evidencesImages,
     String caseIdentifier,
     boolean open
 ) {
