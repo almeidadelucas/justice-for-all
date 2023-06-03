@@ -1,7 +1,6 @@
-package com.justice.justiceforall.service.userservice.uservalidator;
+package com.justice.justiceforall.service.util;
 
 import com.justice.justiceforall.dto.userdto.CreateUserCommand;
-import com.justice.justiceforall.service.util.Handler;
 
 public abstract class BaseUserCreatorHandler implements Handler<CreateUserCommand> {
 
