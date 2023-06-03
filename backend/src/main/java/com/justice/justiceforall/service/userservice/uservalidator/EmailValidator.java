@@ -2,8 +2,9 @@ package com.justice.justiceforall.service.userservice.uservalidator;
 
 import com.justice.justiceforall.dto.userdto.CreateUserCommand;
 import com.justice.justiceforall.exception.InvalidUserFieldException;
+import com.justice.justiceforall.service.util.BaseCreatorHandler;
 
-public class EmailValidator extends BaseUserCreatorHandler {
+public class EmailValidator extends BaseCreatorHandler<CreateUserCommand>  {
     private static final String EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
 
     @Override

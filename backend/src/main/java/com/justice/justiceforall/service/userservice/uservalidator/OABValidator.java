@@ -3,8 +3,9 @@ package com.justice.justiceforall.service.userservice.uservalidator;
 import com.justice.justiceforall.dto.userdto.CreateUserCommand;
 import com.justice.justiceforall.entity.userentity.UserType;
 import com.justice.justiceforall.exception.InvalidUserFieldException;
+import com.justice.justiceforall.service.util.BaseCreatorHandler;
 
-public class OABValidator extends BaseUserCreatorHandler {
+public class OABValidator extends BaseCreatorHandler<CreateUserCommand>  {
     private static final String OAB_REGEX = "^[A-Z]{2}[0-9]{6}$";
 
     @Override

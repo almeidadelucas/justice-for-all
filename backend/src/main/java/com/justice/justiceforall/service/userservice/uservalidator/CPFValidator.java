@@ -5,8 +5,9 @@ import java.util.Arrays;
 import com.justice.justiceforall.dto.userdto.CreateUserCommand;
 import com.justice.justiceforall.entity.userentity.UserType;
 import com.justice.justiceforall.exception.InvalidUserFieldException;
+import com.justice.justiceforall.service.util.BaseCreatorHandler;
 
-public class CPFValidator extends BaseUserCreatorHandler {
+public class CPFValidator extends BaseCreatorHandler<CreateUserCommand> {
 
     private static final String CPF_REGEX = "^[0-9]{11}$";
 
