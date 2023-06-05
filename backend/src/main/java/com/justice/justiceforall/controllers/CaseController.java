@@ -42,6 +42,7 @@ public class CaseController {
     @GetMapping("/{id}")
     @EndpointAuthentication(authenticationType = AuthenticationType.AUTHENTICATED)
     public ResponseEntity<Case> getCaseById(@PathVariable Long id) {
+    	logger.info("Received a request to get a case of id {}", id);
         Case caseObj = caseService.getCaseById(id);
         if (caseObj != null) {
             return ResponseEntity.ok(caseObj);
@@ -53,6 +54,7 @@ public class CaseController {
     @GetMapping("/all")
     @EndpointAuthentication(authenticationType = AuthenticationType.AUTHENTICATED)
     public ResponseEntity<List<Case>> getAllCases() {
+    	logger.info("Received a request to get all cases");
         Case[] cases = caseService.getAllCases();
         if (cases != null) {
             return ResponseEntity.ok(Arrays.asList(cases));
@@ -63,12 +65,13 @@ public class CaseController {
 
     @GetMapping("/category/{category}")
     @EndpointAuthentication(authenticationType = AuthenticationType.AUTHENTICATED)
-    public ResponseEntity<Case> getCaseByCategory(@PathVariable String category) {
-        Case caseObj = caseService.getCaseByCategory(category);
-        if (caseObj != null) {
-            return ResponseEntity.ok(caseObj);
+    public ResponseEntity<List<Case>> getCasesByCategory(@PathVariable String category) {
+    	logger.info("Received a request to get all cases of category {}", category);
+    	Case[] cases = caseService.getCasesByCategory(category);
+        if (cases != null) {
+            return ResponseEntity.ok(Arrays.asList(cases));
         } else {
-            return ResponseEntity.notFound().build();
+        	return ResponseEntity.ok(Collections.emptyList());
         }
     }
 }

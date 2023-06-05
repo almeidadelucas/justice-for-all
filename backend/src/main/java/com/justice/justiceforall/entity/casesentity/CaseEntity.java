@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.With;
 
 @Entity
 @Table(name = "cases")
@@ -21,6 +22,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 @EqualsAndHashCode
+@With
 public class CaseEntity {
 
   @Id

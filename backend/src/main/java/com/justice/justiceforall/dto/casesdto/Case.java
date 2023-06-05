@@ -2,7 +2,12 @@ package com.justice.justiceforall.dto.casesdto;
 
 import com.justice.justiceforall.entity.casesentity.Alegation;
 
+import lombok.Getter;
+import lombok.With;
+
+@With
 public record Case(
+	@Getter
     long caseId,
     String title,
     String category,
