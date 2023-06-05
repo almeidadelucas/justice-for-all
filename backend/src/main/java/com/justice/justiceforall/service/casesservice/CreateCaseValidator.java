@@ -1,6 +1,8 @@
-package com.justice.justiceforall.service.casesservice.casevalidator;
+package com.justice.justiceforall.service.casesservice;
 
 import com.justice.justiceforall.dto.casesdto.CreateCaseCommand;
+import com.justice.justiceforall.service.casesservice.casevalidator.FileFormatValidator;
+import com.justice.justiceforall.service.casesservice.casevalidator.MustHaveFields;
 
 import lombok.experimental.UtilityClass;
 

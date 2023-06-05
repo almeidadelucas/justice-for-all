@@ -55,12 +55,11 @@ public class CaseServiceImpl implements CaseService {
   }
 
   @Override
-  public Case getCaseByCategory(String category) {
-    CaseEntity caseEntity = casesRepository.findByCategory(category);
-    if (caseEntity != null) {
-      return getCaseFromEntity(caseEntity);
-    }
-    return null;
+  public Case[] getCasesByCategory(String category) {
+	List<CaseEntity> caseEntities = casesRepository.findByCategory(category);
+	return caseEntities.stream()
+            .map(this::getCaseFromEntity)
+            .toArray(Case[]::new);
   }
   
   private CaseEntity getCaseEntity(CreateCaseCommand createCaseCommand) {
@@ -68,8 +67,8 @@ public class CaseServiceImpl implements CaseService {
         .title(createCaseCommand.title())
         .category(createCaseCommand.category())
         .description(createCaseCommand.description())
-        .evidencesPdf(createCaseCommand.evicendesPDF())
         .alegation(createCaseCommand.alegation())
+        .evidencesPdf(createCaseCommand.evicendesPDF())
         .evidenceImage(createCaseCommand.evidenceImage())
         .caseIdentifier(createCaseCommand.caseIdentifier())
         .open(createCaseCommand.open())
@@ -85,7 +84,7 @@ public class CaseServiceImpl implements CaseService {
     		entity.getAlegation(),
     		entity.getEvidencesPdf(),
     		entity.getEvidenceImage(),
-    		entity.getEvidenceImage(),
+    		entity.getCaseIdentifier(),
     		entity.isOpen()
     		);
   }

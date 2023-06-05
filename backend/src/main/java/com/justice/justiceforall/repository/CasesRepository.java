@@ -9,6 +9,6 @@ import com.justice.justiceforall.entity.casesentity.CaseEntity;
 
 public interface CasesRepository extends CrudRepository<CaseEntity, Long> {
 
-    CaseEntity findByCategory(String category);
+    List<CaseEntity> findByCategory(String category);
     List<CaseEntity> findAll();
  }

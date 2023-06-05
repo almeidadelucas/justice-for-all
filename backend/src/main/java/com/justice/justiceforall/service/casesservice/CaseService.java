@@ -7,5 +7,5 @@ public interface CaseService {
     Case createCase(CreateCaseCommand createCaseCommand);
     Case getCaseById(Long id);
     Case[] getAllCases();
-    Case getCaseByCategory(String category);
+    Case[] getCasesByCategory(String category);
 }

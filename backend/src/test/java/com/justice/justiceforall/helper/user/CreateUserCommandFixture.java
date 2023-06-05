@@ -1,4 +1,4 @@
-package com.justice.justiceforall.helper;
+package com.justice.justiceforall.helper.user;
 
 import com.justice.justiceforall.dto.userdto.CreateUserCommand;
 import com.justice.justiceforall.entity.userentity.UserType;

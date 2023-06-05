@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class FileFormatValidator extends BaseCreatorHandler<CreateCaseCommand>{
 
-	private static final String FILESTACK_REGEX = "^https?://(?:www\\.)?filestack\\.com/[a-z0-9]+/(?:[a-z0-9]+/)*[a-z0-9]+$";
+	private static final String FILESTACK_REGEX = "^https?://cdn\\.filestackcontent\\.com/[A-Za-z0-9]+$";
 	
 	@Override
 	public void validate(CreateCaseCommand input) {
