@@ -1,4 +1,4 @@
-package com.justice.justiceforall.service;
+package com.justice.justiceforall.service.authenticationservice;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.justice.justiceforall.helper.AuthenticationResponseFixture;
-import com.justice.justiceforall.helper.UserEntityFixture;
+import com.justice.justiceforall.helper.user.UserEntityFixture;
 import com.justice.justiceforall.repository.UsersRepository;
 import com.justice.justiceforall.service.authenticationservice.AuthService;
 

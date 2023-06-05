@@ -1,4 +1,4 @@
-package com.justice.justiceforall.service.impl;
+package com.justice.justiceforall.service.userservice;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -9,9 +9,9 @@ import static org.mockito.Mockito.when;
 
 import com.justice.justiceforall.dto.userdto.CreateUserCommand;
 import com.justice.justiceforall.exception.InvalidUserFieldException;
-import com.justice.justiceforall.helper.CreateUserCommandFixture;
-import com.justice.justiceforall.helper.UserEntityFixture;
-import com.justice.justiceforall.helper.UserFixture;
+import com.justice.justiceforall.helper.user.CreateUserCommandFixture;
+import com.justice.justiceforall.helper.user.UserEntityFixture;
+import com.justice.justiceforall.helper.user.UserFixture;
 import com.justice.justiceforall.repository.UsersRepository;
 import com.justice.justiceforall.service.userservice.UserService;
 
