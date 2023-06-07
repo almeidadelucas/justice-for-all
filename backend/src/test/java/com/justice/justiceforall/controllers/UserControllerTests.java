@@ -6,9 +6,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.justice.justiceforall.helper.CreateUserCommandFixture;
-import com.justice.justiceforall.helper.UserFixture;
-import com.justice.justiceforall.service.UserService;
+import com.justice.justiceforall.helper.user.CreateUserCommandFixture;
+import com.justice.justiceforall.helper.user.UserFixture;
+import com.justice.justiceforall.service.userservice.UserService;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
