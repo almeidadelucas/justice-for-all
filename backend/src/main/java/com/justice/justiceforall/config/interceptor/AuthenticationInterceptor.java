@@ -3,7 +3,8 @@ package com.justice.justiceforall.config.interceptor;
 import com.justice.justiceforall.annotation.EndpointAuthentication;
 import com.justice.justiceforall.config.AuthenticationType;
 import com.justice.justiceforall.constants.AttributeConstants;
-import com.justice.justiceforall.service.AuthService;
+import com.justice.justiceforall.service.authenticationservice.AuthService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
