@@ -1,6 +1,7 @@
 package com.justice.justiceforall.helper;
 
-import com.justice.justiceforall.dto.AuthenticationResponse;
+import com.justice.justiceforall.dto.userdto.AuthenticationResponse;
+
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
