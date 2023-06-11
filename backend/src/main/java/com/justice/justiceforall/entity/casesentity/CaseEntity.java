@@ -30,26 +30,26 @@ public class CaseEntity {
   @Column(name = "case_id")
   private Long id;
 
-  @Column(name = "case_title", nullable = false, length = 30)
+  @Column(nullable = false, length = 30)
   private String title;
 
-  @Column(name = "case_category", nullable = false, length = 100)
+  @Column(nullable = false, length = 100)
   private String category;
 
   @Column(nullable = false, length = 500)
   private String description;
 
-  @Column(name = "alegation", nullable = false)
+  @Column(nullable = false)
   @Enumerated(value = EnumType.STRING)
   private Alegation alegation;
   
-  @Column(nullable = false, length = 120)
+  @Column(name = "evidences_pdf", length = 120)
   private String evidencesPdf;
 
-  @Column(nullable = false, length = 120)
+  @Column(name = "evidence_image", length = 120)
   private String evidenceImage;
 
-  @Column(nullable = false, length = 120)
+  @Column(name = "case_identifier", nullable = false, length = 120)
   private String caseIdentifier;
 
   @Column(nullable = false)
