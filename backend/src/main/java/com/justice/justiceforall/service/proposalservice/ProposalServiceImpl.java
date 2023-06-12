@@ -1,13 +1,11 @@
-package com.justice.justiceforall.service.matchservice;
+package com.justice.justiceforall.service.proposalservice;
 
-import com.justice.justiceforall.dto.matchdto.CreateProposalCommand;
-import com.justice.justiceforall.dto.matchdto.DetailedProposal;
-import com.justice.justiceforall.dto.matchdto.DetailedProposals;
-import com.justice.justiceforall.dto.matchdto.Proposal;
+import com.justice.justiceforall.dto.proposaldto.*;
 import com.justice.justiceforall.entity.proposalentity.CaseProposalEntity;
 import com.justice.justiceforall.entity.proposalentity.CaseProposalId;
 import com.justice.justiceforall.entity.userentity.UserType;
 import com.justice.justiceforall.exception.InvalidCaseException;
+import com.justice.justiceforall.exception.ProposalNotFoundException;
 import com.justice.justiceforall.exception.UserIsNotALawyerException;
 import com.justice.justiceforall.exception.UserNotFoundException;
 import com.justice.justiceforall.repository.CaseProposalRepository;
@@ -17,14 +15,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Service
-public class MatchServiceImpl implements MatchService {
+public class ProposalServiceImpl implements ProposalService {
 
     @Autowired
     private UsersRepository usersRepository;
@@ -35,7 +35,7 @@ public class MatchServiceImpl implements MatchService {
     @Autowired
     private CaseProposalRepository caseProposalRepository;
 
-    private final Logger logger = LoggerFactory.getLogger(MatchServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(ProposalServiceImpl.class);
 
 
     @Override
@@ -77,6 +77,31 @@ public class MatchServiceImpl implements MatchService {
             )));
         });
         return new DetailedProposals(caseId, detailedProposalsList);
+    }
+
+    @Override
+    public void matchProposal(MatchProposalCommand matchProposalCommand) {
+        var proposedCase = casesRepository.findById(matchProposalCommand.caseId());
+        if (proposedCase.isEmpty() || !Objects.equals(proposedCase.get().getUserId(), matchProposalCommand.userId())) {
+            throw new InvalidCaseException("The user Id does not match the one at the case!");
+        }
+
+        if (!proposedCase.get().isOpen()) {
+            throw new InvalidCaseException("The case is not open anymore!");
+        }
+
+        var proposal = caseProposalRepository.findById(
+                new CaseProposalId(matchProposalCommand.caseId(), matchProposalCommand.lawyerId())
+        );
+
+        if (proposal.isEmpty()) {
+            throw new ProposalNotFoundException("A proposal with the given parameters was not found!");
+        }
+
+        var newCase = proposedCase.get();
+        newCase.setLawyerId(matchProposalCommand.lawyerId());
+        newCase.setOpen(false);
+        casesRepository.save(newCase);
     }
 
     private CaseProposalEntity toEntity(CreateProposalCommand createProposalCommand) {

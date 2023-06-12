@@ -1,6 +1,4 @@
-package com.justice.justiceforall.dto.matchdto;
-
-import com.justice.justiceforall.entity.userentity.UserType;
+package com.justice.justiceforall.dto.proposaldto;
 
 import java.time.LocalDateTime;
 
