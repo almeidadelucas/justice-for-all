@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import com.justice.justiceforall.helper.cases.FilterCasesRequestFixture;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,6 +46,21 @@ public class CaseControllerTests {
 
         verify(caseService, times(1)).createCase(createCaseCommand.withUserId(loggedUserId));
         assertEquals(case1, response);
+    }
+
+    @Test
+    void ensureTheFilteredSearchCallsTheServiceWithProperArguments() {
+        var filter = FilterCasesRequestFixture.getRandom();
+        when(caseService.getFilteredCases(filter)).thenReturn(List.of());
+        var response = caseController.getCases(
+                filter.open(),
+                filter.userId(),
+                filter.lawyerId(),
+                filter.category(),
+                filter.description()
+        );
+        verify(caseService, times(1)).getFilteredCases(filter);
+        assertEquals(List.of(), response);
     }
 
     @Test
