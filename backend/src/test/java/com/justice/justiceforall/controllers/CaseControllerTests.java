@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,53 +27,54 @@ import com.justice.justiceforall.service.casesservice.CaseService;
 @SpringBootTest
 @ActiveProfiles("test")
 public class CaseControllerTests {
-	@Autowired
-	private CaseController caseController;
+    @Autowired
+    private CaseController caseController;
 
-	@MockBean
-	private CaseService caseService;
+    @MockBean
+    private CaseService caseService;
 
-	@Test
-	void ensureTheControllerCallsTheServiceMethod() {
-		var createCaseCommand = CreateCaseCommandFixture.correctCaseCommand();
-		var case1 = CaseFixture.correctCase();
-		
-		when(caseService.createCase(any())).thenReturn(case1);
-		
-		var response = caseController.createCase(createCaseCommand);
-		
-		verify(caseService, times(1)).createCase(createCaseCommand);
-		assertEquals(case1, response);
-	}
+    @Test
+    void ensureTheControllerCallsTheServiceMethod() {
+        var createCaseCommand = CreateCaseCommandFixture.correctCaseCommand();
+        var loggedUserId = new Random().nextLong();
+        var case1 = CaseFixture.correctCase();
 
-	@Test
+        when(caseService.createCase(any())).thenReturn(case1);
+
+        var response = caseController.createCase(loggedUserId, createCaseCommand);
+
+        verify(caseService, times(1)).createCase(createCaseCommand.withUserId(loggedUserId));
+        assertEquals(case1, response);
+    }
+
+    @Test
     void ensure_getCaseById_returns_correct_response_for_existing_case() {
-		var caseObj = CaseFixture.correctCase();
-        Long id = caseObj.getCaseId();
+        var caseObj = CaseFixture.correctCase();
+        Long id = caseObj.caseId();
         when(caseService.getCaseById(id)).thenReturn(caseObj);
-      
+
         ResponseEntity<Case> response = caseController.getCaseById(id);
-        
+
         verify(caseService, times(1)).getCaseById(id);
-        
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(caseObj, response.getBody());
     }
-	
-	@Test
+
+    @Test
     void ensure_getCaseById_return_notFound_status() {
         Long id = 5555L;
         when(caseService.getCaseById(id)).thenReturn(null);
-        
+
         ResponseEntity<Case> response = caseController.getCaseById(id);
 
         verify(caseService, times(1)).getCaseById(id);
-        
+
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNull(response.getBody());
     }
-	
-	@Test
+
+    @Test
     void ensure_getAllCases_return_correct_httpStatus_and_correct_cases() {
         Case[] cases = CaseFixture.correctCases();
         when(caseService.getAllCases()).thenReturn(cases);
@@ -80,46 +82,46 @@ public class CaseControllerTests {
         ResponseEntity<List<Case>> response = caseController.getAllCases();
 
         verify(caseService, times(1)).getAllCases();
-        
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(Arrays.asList(cases), response.getBody());
     }
-	
-	@Test
+
+    @Test
     void ensure_getAllCases_return_empty_list_when_there_is_no_case() {
         when(caseService.getAllCases()).thenReturn(null);
-       
+
         ResponseEntity<List<Case>> response = caseController.getAllCases();
-        
+
         verify(caseService, times(1)).getAllCases();
-        
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(Collections.emptyList(), response.getBody());
     }
-	
-	@Test
+
+    @Test
     void ensure_getCasesByCategory_returns_correct_http_response_and_list_of_cases() {
         String category = "furto";
         Case[] cases = CaseFixture.sameCategoryCases();
         when(caseService.getCasesByCategory(category)).thenReturn(cases);
-        
+
         ResponseEntity<List<Case>> response = caseController.getCasesByCategory(category);
 
         verify(caseService, times(1)).getCasesByCategory(category);
-        
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(Arrays.asList(cases), response.getBody());
     }
-	
-	@Test
+
+    @Test
     void getCaseByCategory_NoCases_ReturnsOkResponseWithEmptyList() {
         String category = "trabalhista";
         when(caseService.getCasesByCategory(category)).thenReturn(null);
-        
+
         ResponseEntity<List<Case>> response = caseController.getCasesByCategory(category);
 
         verify(caseService, times(1)).getCasesByCategory(category);
-        
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(Collections.emptyList(), response.getBody());
     }

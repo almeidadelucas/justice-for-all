@@ -18,76 +18,79 @@ import com.justice.justiceforall.repository.CasesRepository;
 @Service
 public class CaseServiceImpl implements CaseService {
 
-  @Autowired
-  private CasesRepository casesRepository;
-  
-  private final Logger logger = LoggerFactory.getLogger(CaseController.class);
+    @Autowired
+    private CasesRepository casesRepository;
 
-  @Override
-  public Case createCase(CreateCaseCommand createCaseCommand) {
-    logger.info(
-        "Creating a new Case of title {} and category {}",
-        createCaseCommand.title(),
-        createCaseCommand.category()
-    );
-    CreateCaseValidator.validateNewCase(createCaseCommand);
-    var savedEntity = casesRepository.save(getCaseEntity(createCaseCommand));
-    logger.info("Created a new Case with ID {}", savedEntity.getId());
-    return getCaseFromEntity(savedEntity);
-  }
+    private final Logger logger = LoggerFactory.getLogger(CaseController.class);
 
-  @Override
-  public Case getCaseById(Long id) {
-    Optional<CaseEntity> caseEntityOptional = casesRepository.findById(id);
-    if (caseEntityOptional.isPresent()) {
-      CaseEntity caseEntity = caseEntityOptional.get();
-      return getCaseFromEntity(caseEntity);
+    @Override
+    public Case createCase(CreateCaseCommand createCaseCommand) {
+        logger.info(
+                "Creating a new Case of title {} and category {}",
+                createCaseCommand.title(),
+                createCaseCommand.category()
+        );
+        CreateCaseValidator.validateNewCase(createCaseCommand);
+        var savedEntity = casesRepository.save(getCaseEntity(createCaseCommand));
+        logger.info("Created a new Case with ID {}", savedEntity.getId());
+        return getCaseFromEntity(savedEntity);
     }
-    return null;
-  }
 
-  @Override
-  public Case[] getAllCases() {
-    List<CaseEntity> caseEntities = casesRepository.findAll();
-    return caseEntities.stream()
-            .map(this::getCaseFromEntity)
-            .toArray(Case[]::new);
-  }
+    @Override
+    public Case getCaseById(Long id) {
+        Optional<CaseEntity> caseEntityOptional = casesRepository.findById(id);
+        if (caseEntityOptional.isPresent()) {
+            CaseEntity caseEntity = caseEntityOptional.get();
+            return getCaseFromEntity(caseEntity);
+        }
+        return null;
+    }
 
-  @Override
-  public Case[] getCasesByCategory(String category) {
-	List<CaseEntity> caseEntities = casesRepository.findByCategory(category);
-	return caseEntities.stream()
-            .map(this::getCaseFromEntity)
-            .toArray(Case[]::new);
-  }
-  
-  private CaseEntity getCaseEntity(CreateCaseCommand createCaseCommand) {
-    return CaseEntity.builder()
-        .title(createCaseCommand.title())
-        .category(createCaseCommand.category())
-        .description(createCaseCommand.description())
-        .alegation(createCaseCommand.alegation())
-        .evidencesPdf(createCaseCommand.evicendesPDF())
-        .evidenceImage(createCaseCommand.evidenceImage())
-        .caseIdentifier(createCaseCommand.caseIdentifier())
-        .open(createCaseCommand.open())
-        .build();
-  }
+    @Override
+    public Case[] getAllCases() {
+        List<CaseEntity> caseEntities = casesRepository.findAll();
+        return caseEntities.stream()
+                .map(this::getCaseFromEntity)
+                .toArray(Case[]::new);
+    }
 
-  private Case getCaseFromEntity(CaseEntity entity) {
-    return new Case(
-    		entity.getId(),
-    		entity.getTitle(),
-    		entity.getCategory(),
-    		entity.getDescription(),
-    		entity.getAlegation(),
-    		entity.getEvidencesPdf(),
-    		entity.getEvidenceImage(),
-    		entity.getCaseIdentifier(),
-    		entity.isOpen()
-    		);
-  }
+    @Override
+    public Case[] getCasesByCategory(String category) {
+        List<CaseEntity> caseEntities = casesRepository.findByCategory(category);
+        return caseEntities.stream()
+                .map(this::getCaseFromEntity)
+                .toArray(Case[]::new);
+    }
+
+    private CaseEntity getCaseEntity(CreateCaseCommand createCaseCommand) {
+        return CaseEntity.builder()
+                .userId(createCaseCommand.userId())
+                .title(createCaseCommand.title())
+                .category(createCaseCommand.category())
+                .description(createCaseCommand.description())
+                .alegation(createCaseCommand.alegation())
+                .evidencesPdf(createCaseCommand.evidencesPDF())
+                .evidenceImage(createCaseCommand.evidenceImage())
+                .caseIdentifier(createCaseCommand.caseIdentifier())
+                .open(createCaseCommand.open())
+                .build();
+    }
+
+    private Case getCaseFromEntity(CaseEntity entity) {
+        return new Case(
+                entity.getId(),
+                entity.getUserId(),
+                entity.getLawyerId(),
+                entity.getTitle(),
+                entity.getCategory(),
+                entity.getDescription(),
+                entity.getAlegation(),
+                entity.getEvidencesPdf(),
+                entity.getEvidenceImage(),
+                entity.getCaseIdentifier(),
+                entity.isOpen()
+        );
+    }
 
 
 }

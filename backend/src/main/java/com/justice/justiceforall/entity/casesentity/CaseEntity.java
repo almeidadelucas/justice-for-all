@@ -1,13 +1,6 @@
 package com.justice.justiceforall.entity.casesentity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -29,6 +22,12 @@ public class CaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "case_id")
   private Long id;
+
+  @Column(name = "user_id", nullable = false)
+  private Long userId;
+
+  @Column(name = "lawyer_id")
+  private Long lawyerId;
 
   @Column(nullable = false, length = 30)
   private String title;
