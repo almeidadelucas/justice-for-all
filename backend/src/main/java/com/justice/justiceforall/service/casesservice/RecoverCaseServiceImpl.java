@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.justice.justiceforall.dto.casesdto.Case;
 import com.justice.justiceforall.entity.casesentity.CaseEntity;
 import com.justice.justiceforall.repository.CasesRepository;
 
+@Service
 public class RecoverCaseServiceImpl {
       @Autowired
       private CasesRepository casesRepository;

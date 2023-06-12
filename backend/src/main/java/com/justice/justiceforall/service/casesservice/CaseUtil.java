@@ -1,9 +1,12 @@
 package com.justice.justiceforall.service.casesservice;
 
+import org.springframework.stereotype.Component;
+
 import com.justice.justiceforall.dto.casesdto.Case;
 import com.justice.justiceforall.dto.casesdto.CreateCaseCommand;
 import com.justice.justiceforall.entity.casesentity.CaseEntity;
 
+@Component
 public class CaseUtil {
       public CaseEntity getCaseEntity(CreateCaseCommand createCaseCommand) {
             return CaseEntity.builder()
