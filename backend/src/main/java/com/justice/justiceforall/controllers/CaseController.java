@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.justice.justiceforall.constants.AttributeConstants;
 import com.justice.justiceforall.dto.casesdto.FilterCasesRequest;
+import com.justice.justiceforall.dto.casesdto.FilterPaging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +51,12 @@ public class CaseController {
             @RequestParam(name = "userId", required = false) Long userId,
             @RequestParam(name = "lawyerId", required = false) Long lawyerId,
             @RequestParam(name = "category", required = false) String category,
-            @RequestParam(name = "description", required = false) String description
+            @RequestParam(name = "description", required = false) String description,
+            @RequestParam(name = "page", required = false, defaultValue = "1") int pageNumber,
+            @RequestParam(name = "size", required = false, defaultValue = "10") int pageSize
     ) {
-        var filterCasesRequest = new FilterCasesRequest(open, userId, lawyerId, category, description);
-        logger.info("Received a new request to fetch Cases based on the filter {}", filterCasesRequest);
+        var filterCasesRequest = new FilterCasesRequest(open, userId, lawyerId, category, description,
+                new FilterPaging(pageNumber, pageSize));
         return caseService.getFilteredCases(filterCasesRequest);
     }
 

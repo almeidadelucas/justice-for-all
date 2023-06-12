@@ -9,6 +9,8 @@ import com.justice.justiceforall.dto.casesdto.FilterCasesRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.justice.justiceforall.controllers.CaseController;
@@ -40,7 +42,17 @@ public class CaseServiceImpl implements CaseService {
 
     @Override
     public List<Case> getFilteredCases(FilterCasesRequest filterCasesRequest) {
-        return Collections.emptyList();
+        logger.info("Filtering cases with filter {}", filterCasesRequest);
+        return casesRepository.filterCases(
+                        filterCasesRequest.open(),
+                        filterCasesRequest.userId(),
+                        filterCasesRequest.lawyerId(),
+                        filterCasesRequest.category(),
+                        filterCasesRequest.description(),
+                        PageRequest.of(filterCasesRequest.paging().pageNumber() - 1, filterCasesRequest.paging().pageSize())
+                ).stream()
+                .map(this::getCaseFromEntity)
+                .toList();
     }
 
     @Override

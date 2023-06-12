@@ -57,7 +57,9 @@ public class CaseControllerTests {
                 filter.userId(),
                 filter.lawyerId(),
                 filter.category(),
-                filter.description()
+                filter.description(),
+                filter.paging().pageNumber(),
+                filter.paging().pageSize()
         );
         verify(caseService, times(1)).getFilteredCases(filter);
         assertEquals(List.of(), response);

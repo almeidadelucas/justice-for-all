@@ -5,6 +5,7 @@ public record FilterCasesRequest(
         Long userId,
         Long lawyerId,
         String category,
-        String description
+        String description,
+        FilterPaging paging
 ) {
 }

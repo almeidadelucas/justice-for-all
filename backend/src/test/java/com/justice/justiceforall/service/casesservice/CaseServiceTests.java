@@ -11,10 +11,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import com.justice.justiceforall.helper.cases.FilterCasesRequestFixture;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.justice.justiceforall.helper.cases.CaseFixture;
@@ -44,6 +46,23 @@ public class CaseServiceTests {
 		
 		assertEquals(CaseFixture.correctCase(), response);
 	}
+
+    @Test
+    void ensureTheGetFilteredCasesRepositoryQueryIsCalledWithCorrectArguments() {
+        var caseEntities = Arrays.stream(CaseEntityFixture.casesWithId()).toList();
+        when(casesRepository.filterCases(any(), any(), any(), any(), any(), any())).thenReturn(caseEntities);
+        var filter = FilterCasesRequestFixture.getRandom();
+        var response = caseService.getFilteredCases(filter);
+        verify(casesRepository, times(1)).filterCases(
+                filter.open(),
+                filter.userId(),
+                filter.lawyerId(),
+                filter.category(),
+                filter.description(),
+                PageRequest.of(filter.paging().pageNumber() - 1, filter.paging().pageSize())
+        );
+        assertEquals(caseEntities.size(), response.size());
+    }
 
 	@Test
     public void test_getCaseById_when_id_exist() {
