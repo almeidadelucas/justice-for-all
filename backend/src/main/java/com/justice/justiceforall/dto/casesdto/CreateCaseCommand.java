@@ -6,13 +6,14 @@ import lombok.With;
 
 @With
 public record CreateCaseCommand(
-    String title,
-    String category,
-    String description,
-    Alegation alegation,
-    String evicendesPDF,
-    String evidenceImage,
-    String caseIdentifier,
-    boolean open
+        Long userId,
+        String title,
+        String category,
+        String description,
+        Alegation alegation,
+        String evidencesPDF,
+        String evidenceImage,
+        String caseIdentifier,
+        boolean open
 ) {
 }

@@ -10,6 +10,8 @@ public class CaseFixture {
 	public Case correctCase() {
 	    return new Case(
 	    		1L,
+				10L,
+				null,
 	    		"Trafico de drogas na favela do novo engenho",
 		        "Trafico",
 		        "Estudante do terceiro ano do ensino médio que"
