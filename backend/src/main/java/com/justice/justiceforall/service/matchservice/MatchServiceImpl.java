@@ -1,6 +1,8 @@
 package com.justice.justiceforall.service.matchservice;
 
 import com.justice.justiceforall.dto.matchdto.CreateProposalCommand;
+import com.justice.justiceforall.dto.matchdto.DetailedProposal;
+import com.justice.justiceforall.dto.matchdto.DetailedProposals;
 import com.justice.justiceforall.dto.matchdto.Proposal;
 import com.justice.justiceforall.entity.proposalentity.CaseProposalEntity;
 import com.justice.justiceforall.entity.proposalentity.CaseProposalId;
@@ -19,8 +21,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
+import java.util.ArrayList;
 
 @Service
 public class MatchServiceImpl implements MatchService {
@@ -59,6 +60,23 @@ public class MatchServiceImpl implements MatchService {
         );
         var entity = caseProposalRepository.save(toEntity(createProposalCommand));
         return entityToProposal(entity);
+    }
+
+    @Override
+    public DetailedProposals getProposalsForCase(Long caseId) {
+        var proposals = caseProposalRepository.findByCaseProposalIdCaseId(caseId);
+        var detailedProposalsList = new ArrayList<DetailedProposal>();
+        proposals.forEach(proposal -> {
+            var lawyer = usersRepository.findById(proposal.getCaseProposalId().getLawyerId());
+            lawyer.ifPresent(lawyerEntity -> detailedProposalsList.add(new DetailedProposal(
+                    lawyerEntity.getId(),
+                    lawyerEntity.getFirstName(),
+                    lawyerEntity.getLastName(),
+                    LocalDateTime.ofInstant(proposal.getProposalDate(), ZoneId.systemDefault()),
+                    lawyerEntity.getOab()
+            )));
+        });
+        return new DetailedProposals(caseId, detailedProposalsList);
     }
 
     private CaseProposalEntity toEntity(CreateProposalCommand createProposalCommand) {
