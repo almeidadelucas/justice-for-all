@@ -1,9 +1,11 @@
 package com.justice.justiceforall.service.casesservice;
 
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import com.justice.justiceforall.dto.casesdto.FilterCasesRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,11 @@ public class CaseServiceImpl implements CaseService {
         var savedEntity = casesRepository.save(getCaseEntity(createCaseCommand));
         logger.info("Created a new Case with ID {}", savedEntity.getId());
         return getCaseFromEntity(savedEntity);
+    }
+
+    @Override
+    public List<Case> getFilteredCases(FilterCasesRequest filterCasesRequest) {
+        return Collections.emptyList();
     }
 
     @Override
