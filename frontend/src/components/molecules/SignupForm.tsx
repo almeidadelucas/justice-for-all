@@ -1,15 +1,22 @@
 import React from 'react';
-import { TextField, Box, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { TextField, Box, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, FormHelperText } from '@mui/material';
 import { useRouter } from 'next/router';
-import { FormEvent, useState } from 'react';
+import { FormEvent } from 'react';
 import { Form } from '@/components/atoms/Form';
+import { Controller, useForm } from 'react-hook-form';
+import { useValidateEmail } from '@/hooks/useValidateEmail';
+import { useValidateFirstName } from '@/hooks/useValidateFirstName';
+import { useValidateLastName } from '@/hooks/useValidateLastName';
+import { useValidateCpf } from '@/hooks/useValidateCpf';
+import { useValidateOab } from '@/hooks/useValidateOab';
+import { useValidatePassword } from '@/hooks/useValidatePassword';
 
 const UserType = {
 	LAWYER: 'LAWYER',
 	CLIENT: 'CLIENT'
 };
 
-interface IFormValues {
+export interface IFormValues {
 	firstName: string;
 	lastName: string;
 	email: string;
@@ -19,104 +26,43 @@ interface IFormValues {
 	oab?: string;
 }
 
-const EMAIL_REGEX =
-	/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-const OAB_REGEX = /^[A-Z]{2}[0-9]{6}$/;
-
 export function SignupForm() {
+	const { control, register, handleSubmit, formState: { errors }, watch } = useForm<IFormValues>();
 	const { push } = useRouter();
 
-	const [formValues, setFormValues] = useState<IFormValues>({
-		firstName: '',
-		lastName: '',
-		email: '',
-		password: '',
-		type: ''
-	});
+	const { emailInputProps } = useValidateEmail(register);
+	const { firstNameInputProps } = useValidateFirstName(register);
+	const { lastNameInputProps } = useValidateLastName(register);
+	const { cpfInputProps } = useValidateCpf(register);
+	const { oabInputProps } = useValidateOab(register);
+	const passwordRegister = useValidatePassword(register);
 
-	const [errors, setErrors] = useState<IFormValues>({
-		firstName: '',
-		lastName: '',
-		email: '',
-		password: '',
-		type: '',
-		cpf: '',
-		oab: '',
-	});
-
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-		const fieldName =  event.target.name;
-		const fieldValue = event.target.value;
-
-		setFormValues(current => ({
-			...current,
-			[fieldName]: fieldValue
-		}));
-	};
-
-	const validate = () => {
-		const newErrors: IFormValues = {
-			firstName: '',
-			lastName: '',
-			email: '',
-			password: '',
-			type: '',
-			cpf: '',
-			oab: '',
-		};
-
-		if (!formValues.email.match(EMAIL_REGEX)) {
-			newErrors.email = 'Email deve seguir o formato "email@email.com"';
-		}
-		if (formValues.firstName.length < 2 || formValues.firstName.length > 30) {
-			newErrors.firstName = 'O primeiro nome deve conter mais que duas letras e menos de 30';
-		}
-		if (formValues.lastName.length < 2 || formValues.lastName.length > 100) {
-			newErrors.lastName = 'O sobrenome nome deve conter mais que duas letras e menos de 100';
-		} 
-		if (formValues.cpf && formValues.cpf?.length !== 11) {
-			newErrors.cpf = 'CPF deve conter 11 dígitos';
-		}
-		if (formValues.oab) {
-			if (formValues.oab.length !== 8) {
-				newErrors.oab = 'OAB deve conter 8 dígitos';
-			} else if (!formValues.oab.match(OAB_REGEX)) {
-				newErrors.oab = 'OAB deve seguir o formato AA123456';
+	const onSubmit = (data: IFormValues) => {
+		fetch('http://localhost:8080/user', {
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: {
+				'Content-Type': 'application/json'
 			}
-		}
-		if (formValues.password.length < 8) {
-			newErrors.password = 'A senha deve conter no mínimo 8 dígitos';
-		}
-
-		setErrors(newErrors);
-		return Object.values(newErrors).every(value => value === '');
+		}).then(res => {
+			if (res.status === 201) {
+				push('/');
+			} else {
+				alert('Erro ao cadastrar usuário');
+			}
+		}).catch(err => {
+			alert('Erro ao cadastrar usuário');
+			console.error('Error to register new user: ', err.message);
+		});
 	};
 
-	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+	const customSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		if (validate()) {
-			fetch('http://localhost:8080/user', {
-				method: 'POST',
-				body: JSON.stringify(formValues),
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}).then(res => {
-				if (res.status === 201) {
-					push('/');
-				} else {
-					alert('Erro ao cadastrar usuário');
-				}
-			}).catch(err => {
-				alert('Erro ao cadastrar usuário');
-				console.error('Error to register new user: ', err.message);
-			});
-		}
+		handleSubmit(onSubmit)(event);
 	};
 
 	return (
-		<Form onSubmit={handleSubmit}>
+		<Form onSubmit={customSubmit}>
 			<Box
 				sx={{
 					display: 'flex',
@@ -132,71 +78,80 @@ export function SignupForm() {
 					columnGap: '1rem'
 				}}>
 					<TextField
-						name="firstName"
 						label="Primeiro Nome"
 						required
 						variant="standard"
 						error={!!errors.firstName}
-						helperText={errors.firstName}
-						onChange={handleChange}
+						helperText={errors.firstName?.message as string}
+						{...firstNameInputProps}
 					/>
 					<TextField
-						name="lastName"
 						label="Sobrenome"
 						required
 						variant="standard"
 						error={!!errors.lastName}
-						helperText={errors.lastName}
-						onChange={handleChange}
+						helperText={errors.lastName?.message as string}
+						{...lastNameInputProps}
 					/>
 				</Box>
 				<TextField
-					name="email"
 					label="Email"
 					required
 					variant="standard"
 					error={!!errors.email}
-					helperText={errors.email}
-					onChange={handleChange}
+					helperText={errors.email?.message as string}
+					{...emailInputProps}
 				/>
 				<TextField
-					name="password"
 					label="Senha"
 					required
 					variant="standard"
 					type="password"
 					error={!!errors.password}
-					helperText={errors.password}
-					onChange={handleChange}
+					helperText={errors.password?.message as string}
+					{...passwordRegister}
 				/>
-				<FormControl sx={{ borderBottom: '1px solid grey'}} required>
-					<FormLabel>Tipo de usuário</FormLabel>
-					<RadioGroup row onChange={handleChange}>
-						<FormControlLabel value={UserType.LAWYER} control={<Radio />} label="Advogado" name="type" />
-						<FormControlLabel value={UserType.CLIENT} control={<Radio />} label="Cliente" name="type" />
-					</RadioGroup>
-				</FormControl>
-				{formValues.type === UserType.LAWYER && (<TextField
-					name="oab"
-					label="OAB"
-					required
-					variant="standard"
-					error={!!errors.oab}
-					helperText={errors.oab}
-					onChange={handleChange}
-				/>)}
-				{formValues.type === UserType.CLIENT && (<TextField
-					name="cpf"
-					label="CPF"
-					required
-					variant="standard"
-					error={!!errors.cpf}
-					helperText={errors.cpf}
-					onChange={handleChange}
-				/>)}
+				<Controller
+					name='type'
+					control={control}
+					defaultValue=""
+					rules={{ required: 'Selecione uma opção'}}
+					render={({ field}) => (
+						<FormControl
+							sx={{ borderBottom: '1px solid grey'}}
+							error={!!errors.type}
+							required
+						>
+							<FormLabel>Tipo de usuário</FormLabel>
+							<RadioGroup row {...field}>
+								<FormControlLabel value={UserType.LAWYER} control={<Radio />} label="Advogado" name="type" />
+								<FormControlLabel value={UserType.CLIENT} control={<Radio />} label="Cliente" name="type" />
+							</RadioGroup>
+							{errors.type?.message && <FormHelperText>{errors.type.message as string}</FormHelperText>}
+						</FormControl>
+					)}
+				/>
+				{watch('type') === UserType.LAWYER && (
+					<TextField
+						label="OAB"
+						required
+						variant="standard"
+						error={!!errors.oab}
+						helperText={errors.oab?.message as string}
+						{...oabInputProps}
+					/>)}
+				{watch('type') === UserType.CLIENT && (
+					<TextField
+						label="CPF"
+						required
+						variant="standard"
+						error={!!errors.cpf}
+						helperText={errors.cpf?.message as string}
+						{...cpfInputProps}
+					/>)}
 			</Box>
 			<Button type="submit" variant="outlined">
-							Cadastrar
+				Cadastrar
 			</Button>
 		</Form>
 	);

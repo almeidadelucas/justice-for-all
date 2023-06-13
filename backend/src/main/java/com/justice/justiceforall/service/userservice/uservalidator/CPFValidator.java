@@ -19,23 +19,29 @@ public class CPFValidator extends BaseCreatorHandler<CreateUserCommand> {
                 throw new InvalidUserFieldException("The CPF is not properly formatted");
             } else {
                 int[] digitosOriginais = new int[11];
+                
                 for (int i = 0; i < 11; i++) {
                     digitosOriginais[i] = Character.getNumericValue(cpf.charAt(i));
                 }
+
                 int[] digitosCopiados = Arrays.copyOf(digitosOriginais, digitosOriginais.length);
-                /////primeiro digito
-                int digito0 = digitoEsperado(digitosOriginais, 0);
-                digitosCopiados[9] = digito0;
-                /////segundo digito
-                int digito1 = digitoEsperado(digitosCopiados, 1);
-                digitosCopiados[10] = digito1;
-                //////validação
-                if (digitosOriginais[9] != digito0 || digitosOriginais[10] != digito1) {
-                    throw new InvalidUserFieldException("The CPF is not properly formatted");
-                }
+                
+                int primeiroDigito = digitoEsperado(digitosOriginais, 0);
+                digitosCopiados[9] = primeiroDigito;
+                
+                int segundDigito = digitoEsperado(digitosCopiados, 1);
+                digitosCopiados[10] = segundDigito;
+
+                this.validacao(digitosOriginais, primeiroDigito, segundDigito);
             }
         }
         toNext(input);
+    }
+
+    private void validacao(int[] digitosOriginais, int primeiroDigito, int segundDigito) {
+        if (digitosOriginais[9] != primeiroDigito || digitosOriginais[10] != segundDigito) {
+            throw new InvalidUserFieldException("The CPF is not properly formatted");
+        }
     }
 
     private int digitoEsperado(int digitos[], int ordem) {
