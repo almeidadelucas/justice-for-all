@@ -11,7 +11,7 @@ import com.justice.justiceforall.dto.casesdto.CreateCaseCommand;
 import com.justice.justiceforall.repository.CasesRepository;
 
 @Service
-public class CreateCaseServiceImpl {
+public class CreateCaseServiceImpl{
       @Autowired
       private CaseUtil util;
       

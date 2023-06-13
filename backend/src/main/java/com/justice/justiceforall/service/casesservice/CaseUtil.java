@@ -10,11 +10,12 @@ import com.justice.justiceforall.entity.casesentity.CaseEntity;
 public class CaseUtil {
       public CaseEntity getCaseEntity(CreateCaseCommand createCaseCommand) {
             return CaseEntity.builder()
+                  .userId(createCaseCommand.userId())
                   .title(createCaseCommand.title())
                   .category(createCaseCommand.category())
                   .description(createCaseCommand.description())
                   .alegation(createCaseCommand.alegation())
-                  .evidencesPdf(createCaseCommand.evicendesPDF())
+                  .evidencesPdf(createCaseCommand.evidencesPDF())
                   .evidenceImage(createCaseCommand.evidenceImage())
                   .caseIdentifier(createCaseCommand.caseIdentifier())
                   .open(createCaseCommand.open())
@@ -24,6 +25,8 @@ public class CaseUtil {
       public Case getCaseFromEntity(CaseEntity entity) {
             return new Case(
                   entity.getId(),
+                  entity.getUserId(),
+                  entity.getLawyerId(),
                   entity.getTitle(),
                   entity.getCategory(),
                   entity.getDescription(),
