@@ -7,16 +7,16 @@ import lombok.With;
 
 @With
 public record Case(
-	@Getter
-    long caseId,
-    String title,
-    String category,
-    String description,
-    Alegation alegation,
-    String evidencesPDF,
-    String evidencesImages,
-    String caseIdentifier,
-    boolean open
+        long caseId,
+        long userId,
+        Long lawyerId,
+        String title,
+        String category,
+        String description,
+        Alegation alegation,
+        String evidencesPDF,
+        String evidencesImages,
+        String caseIdentifier,
+        boolean open
 ) {
-
 }
