@@ -13,7 +13,7 @@ public class FileFormatValidator extends BaseCreatorHandler<CreateCaseCommand>{
 	
 	@Override
 	public void validate(CreateCaseCommand input) {
-		if(!this.isFileStackURL(input.evicendesPDF()) || !this.isFileStackURL(input.evidenceImage())) {
+		if(!this.isFileStackURL(input.evidencesPDF()) || !this.isFileStackURL(input.evidenceImage())) {
 			throw new InvalidCaseFieldException("The files url are not in the rigth format.");
 		};
 	    toNext(input);

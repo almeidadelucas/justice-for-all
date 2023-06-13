@@ -9,6 +9,7 @@ import lombok.experimental.UtilityClass;
 public class CreateCaseCommandFixture {
 	public CreateCaseCommand correctCaseCommand() {
 	    return new CreateCaseCommand(
+				10L,
 	        "Trafico de drogas na favela do novo engenho",
 	        "Trafico",
 	        "Estudante do terceiro ano do ensino médio que"
@@ -23,7 +24,7 @@ public class CreateCaseCommandFixture {
 	  }
 	
 	public CreateCaseCommand createWithInvalidFileUrl() {
-		return correctCaseCommand().withEvicendesPDF("http://localhost:4200");
+		return correctCaseCommand().withEvidencesPDF("http://localhost:4200");
 	}
 	
 	public CreateCaseCommand createWithInvalidTitle() {
