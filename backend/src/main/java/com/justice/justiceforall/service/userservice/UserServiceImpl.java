@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
         createUserCommand.type(),
         createUserCommand.email()
     );
-    CreateUserValidator.validateNewUser(createUserCommand);
+    createUserCommand.validateNewUser();
     var savedEntity = usersRepository.save(getUserEntity(createUserCommand));
     logger.info("Created a new User with ID {}", savedEntity.getId());
     return new User(savedEntity);
