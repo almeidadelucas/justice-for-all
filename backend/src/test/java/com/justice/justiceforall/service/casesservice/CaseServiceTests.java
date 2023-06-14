@@ -16,6 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -49,7 +51,7 @@ public class CaseServiceTests {
 
     @Test
     void ensureTheGetFilteredCasesRepositoryQueryIsCalledWithCorrectArguments() {
-        var caseEntities = Arrays.stream(CaseEntityFixture.casesWithId()).toList();
+        Page<CaseEntity> caseEntities = new PageImpl<>(Arrays.stream(CaseEntityFixture.casesWithId()).toList());
         when(casesRepository.filterCases(any(), any(), any(), any(), any(), any())).thenReturn(caseEntities);
         var filter = FilterCasesRequestFixture.getRandom();
         var response = caseService.getFilteredCases(filter);
@@ -61,7 +63,7 @@ public class CaseServiceTests {
                 filter.description(),
                 PageRequest.of(filter.paging().pageNumber() - 1, filter.paging().pageSize())
         );
-        assertEquals(caseEntities.size(), response.size());
+        assertEquals(caseEntities.get().count(), response.cases().size());
     }
 
 	@Test
