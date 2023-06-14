@@ -3,7 +3,7 @@ import { UseFormRegister } from 'react-hook-form';
 
 export function useValidatePassword(register: UseFormRegister<IFormValues>) {
 	return {
-		oabInputProps: register('password', {
+		passwordInputProps: register('password', {
 			minLength: {
 				value: 8,
 				message: 'A senha deve ter no mínimo 8 dígitos'
