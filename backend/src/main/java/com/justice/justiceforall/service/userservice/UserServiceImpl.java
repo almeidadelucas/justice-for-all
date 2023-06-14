@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     createUserCommand.validateNewUser();
     var savedEntity = usersRepository.save(getUserEntity(createUserCommand));
     logger.info("Created a new User with ID {}", savedEntity.getId());
-    return getUserFromEntity(savedEntity);
+    return new User(savedEntity);
   }
 
   private UserEntity getUserEntity(CreateUserCommand createUserCommand) {
@@ -42,18 +42,5 @@ public class UserServiceImpl implements UserService {
         .cpf(createUserCommand.cpf())
         .oab(createUserCommand.oab())
         .build();
-  }
-
-  private User getUserFromEntity(UserEntity entity) {
-    return new User(
-        entity.getId(),
-        entity.getFirstName(),
-        entity.getLastName(),
-        entity.getEmail(),
-        entity.getPassword(),
-        entity.getUserType(),
-        entity.getCpf(),
-        entity.getOab()
-    );
   }
 }
