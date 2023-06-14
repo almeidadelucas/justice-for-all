@@ -2,7 +2,9 @@ package com.justice.justiceforall.dto.userdto;
 
 import com.justice.justiceforall.entity.userentity.UserEntity;
 import com.justice.justiceforall.entity.userentity.UserType;
+import lombok.With;
 
+@With
 public record User(
         long userId,
         String firstName,
