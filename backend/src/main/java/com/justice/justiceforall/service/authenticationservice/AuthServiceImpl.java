@@ -1,6 +1,7 @@
 package com.justice.justiceforall.service.authenticationservice;
 
 import com.justice.justiceforall.dto.userdto.AuthenticationResponse;
+import com.justice.justiceforall.dto.userdto.User;
 import com.justice.justiceforall.entity.userentity.UserEntity;
 import com.justice.justiceforall.repository.UsersRepository;
 
@@ -34,6 +35,14 @@ public class AuthServiceImpl implements AuthService {
     }
     logger.error("Invalid authentication for authorization header [{}]", basicAuthHeaderValue);
     return new AuthenticationResponse(false, null);
+  }
+
+  @Override
+  public User getUserFromId(Long userId) {
+    var entity = usersRepository.findById(userId);
+    if (entity.isEmpty()) {
+    }
+    return new User(usersRepository.findById(userId).get());
   }
 
   private static String[] getDecodedCredentials(String basicAuthHeaderValue) {
