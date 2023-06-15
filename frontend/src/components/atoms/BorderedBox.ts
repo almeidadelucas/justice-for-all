@@ -5,5 +5,5 @@ export const BorderedBox = styled(Box)`
   display: flex;
   padding: 2rem;
   border: 1px solid black;
-  border-radius: 3%;
+  border-radius: 15px;
 `;
