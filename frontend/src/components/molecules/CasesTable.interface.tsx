@@ -9,6 +9,8 @@ export interface IFiltersParams {
   clientId?: number;
   lawyerId?: number;
   opened?: boolean;
+  sort_by?: string;
+  order_by?: 'asc' | 'desc';
 }
 
 export interface ICase {

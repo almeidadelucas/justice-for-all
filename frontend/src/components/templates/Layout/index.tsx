@@ -29,7 +29,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         width: '100vw',
         height: `calc(100vh - ${ref.current?.clientHeight || 0}px)`,
         display: 'flex',
-        padding: '4rem'
+        padding: '2rem 4rem '
       }}>
         {children}
       </Box>
