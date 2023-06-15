@@ -11,11 +11,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import com.justice.justiceforall.dto.casesdto.FilteredCases;
 import com.justice.justiceforall.helper.cases.FilterCasesRequestFixture;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
@@ -51,7 +53,7 @@ public class CaseControllerTests {
     @Test
     void ensureTheFilteredSearchCallsTheServiceWithProperArguments() {
         var filter = FilterCasesRequestFixture.getRandom();
-        when(caseService.getFilteredCases(filter)).thenReturn(List.of());
+        when(caseService.getFilteredCases(filter)).thenReturn(new FilteredCases(0, Collections.emptyList()));
         var response = caseController.getCases(
                 filter.open(),
                 filter.userId(),
@@ -59,10 +61,12 @@ public class CaseControllerTests {
                 filter.category(),
                 filter.description(),
                 filter.paging().pageNumber(),
-                filter.paging().pageSize()
+                filter.paging().pageSize(),
+                "case_id",
+                "asc"
         );
         verify(caseService, times(1)).getFilteredCases(filter);
-        assertEquals(List.of(), response);
+        assertEquals(List.of(), response.cases());
     }
 
     @Test
