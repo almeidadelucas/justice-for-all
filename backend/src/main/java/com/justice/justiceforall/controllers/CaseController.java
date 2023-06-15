@@ -50,10 +50,12 @@ public class CaseController {
             @RequestParam(name = "category", required = false) String category,
             @RequestParam(name = "description", required = false) String description,
             @RequestParam(name = "page", required = false, defaultValue = "1") int pageNumber,
-            @RequestParam(name = "size", required = false, defaultValue = "10") int pageSize
+            @RequestParam(name = "size", required = false, defaultValue = "10") int pageSize,
+            @RequestParam(name = "sort_by", required = false, defaultValue = "case_id") String sortBy,
+            @RequestParam(name = "order_by", required = false, defaultValue = "asc") String orderBy
     ) {
         var filterCasesRequest = new FilterCasesRequest(open, userId, lawyerId, category, description,
-                new FilterPaging(pageNumber, pageSize));
+                new FilterPaging(pageNumber, pageSize, sortBy, orderBy));
         return caseService.getFilteredCases(filterCasesRequest);
     }
 

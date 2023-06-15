@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.justice.justiceforall.controllers.CaseController;
@@ -59,7 +60,11 @@ public class RecoverCaseServiceImpl {
                 filterCasesRequest.description(),
                 PageRequest.of(
                         filterCasesRequest.paging().pageNumber() - 1,
-                        filterCasesRequest.paging().pageSize())
+                        filterCasesRequest.paging().pageSize(),
+                        Sort.by(Sort.Direction.fromString(filterCasesRequest.paging().orderBy().toUpperCase()),
+                                filterCasesRequest.paging().sortBy()
+                        )
+                )
         );
         return new FilteredCases(page.getTotalPages(), page.stream().map(util::getCaseFromEntity).toList());
     }

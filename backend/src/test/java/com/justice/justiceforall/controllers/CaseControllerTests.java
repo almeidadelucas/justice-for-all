@@ -61,7 +61,9 @@ public class CaseControllerTests {
                 filter.category(),
                 filter.description(),
                 filter.paging().pageNumber(),
-                filter.paging().pageSize()
+                filter.paging().pageSize(),
+                "case_id",
+                "asc"
         );
         verify(caseService, times(1)).getFilteredCases(filter);
         assertEquals(List.of(), response.cases());
