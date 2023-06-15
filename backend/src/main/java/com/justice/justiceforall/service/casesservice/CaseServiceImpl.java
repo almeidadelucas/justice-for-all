@@ -1,8 +1,7 @@
 package com.justice.justiceforall.service.casesservice;
 
 
-import java.util.List;
-
+import com.justice.justiceforall.dto.casesdto.FilteredCases;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +39,7 @@ public class CaseServiceImpl implements CaseService {
   }
 
   @Override
-  public List<Case> getFilteredCases(FilterCasesRequest filterCasesRequest) {
+  public FilteredCases getFilteredCases(FilterCasesRequest filterCasesRequest) {
     return recoverCaseService.getFilteredCases(filterCasesRequest);
   }
 }

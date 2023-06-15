@@ -19,7 +19,9 @@ public class FilterCasesRequestFixture {
                 "caso furto",
                 new FilterPaging(
                         new Random().nextInt(1, 20),
-                        new Random().nextInt(1, 200)
+                        new Random().nextInt(1, 200),
+                        "case_id",
+                        "asc"
                 )
         );
     }
