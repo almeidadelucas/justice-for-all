@@ -1,3 +1,15 @@
+export const CLIENT_FILTERS = [
+  { key: 'lawyerId', label: 'ID do advogado' },
+  { key: 'category', label: 'Categoria' },
+  { key: 'description', label: 'Descrição' },
+]
+
+export const LAWYER_FILTERS = [
+  { key: 'userId', label: 'ID do cliente' },
+  { key: 'category', label: 'Categoria' },
+  { key: 'description', label: 'Descrição' },
+]
+
 const Allegation = {
 	INNOCENT: 'INNOCENT',
 	GUITY: 'GUITY'

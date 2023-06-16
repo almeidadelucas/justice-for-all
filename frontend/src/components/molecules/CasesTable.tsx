@@ -3,27 +3,9 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePag
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { ICase, TVisions, Visions } from "../organisms/ShowCasesPage.interfaces";
-import { Allegation, IFiltersParams } from "./CasesTable.interface";
+import { Allegation, HEADERS_CLIENT, HEADERS_LAWYER, IFiltersParams } from "./CasesTable.interface";
 
-const headersLawyer = [
-	{ key: 'case_id', label: 'ID do caso' },
-	{ key: 'client_id', label: 'ID do cliente' },
-	{ key: 'category', label: 'Categoria' },
-	{ key: 'title', label: 'Título' },
-	{ key: 'description', label: 'Descrição' },
-	{ key: 'alegation', label: 'Alegação' },
-]
-
-const headersClient = [
-	{ key: 'case_id', label: 'ID do caso' },
-	{ key: 'lawyer_id', label: 'ID do advogado' },
-	{ key: 'category', label: 'Categoria' },
-	{ key: 'title', label: 'Título' },
-	{ key: 'description', label: 'Descrição' },
-	{ key: 'alegation', label: 'Alegação' },
-]
-
-export default function CasesTable ({ vision }: { vision: TVisions}) {
+export default function CasesTable ({ vision, filterKey, filterValue }: { vision: TVisions; filterKey: string; filterValue: string }) {
   const { token, loggedUser } = useContext(AuthContext);
 	const [cases, setCases] = useState<ICase[]>([]);
   const [sortColumn, setSortColumn] = useState('case_id');
@@ -31,6 +13,7 @@ export default function CasesTable ({ vision }: { vision: TVisions}) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [rawSearch, setRawSearch] = useState({});
 
   const axiosInstance = axios.create({
     baseURL: process.env.JUSTICE_FOR_ALL_API_URL,
@@ -61,6 +44,7 @@ export default function CasesTable ({ vision }: { vision: TVisions}) {
       size: rowsPerPage,
       sort_by: sortColumn,
       order_by: sortOrder,
+      ...rawSearch,
     }
   
     if (vision === Visions.LAWYER_CASES) {
@@ -83,7 +67,16 @@ export default function CasesTable ({ vision }: { vision: TVisions}) {
         console.error(err)
         alert('Erro ao buscar casos')
       })
-  }, [vision, page, rowsPerPage, sortColumn, sortOrder])
+  }, [vision, page, rowsPerPage, sortColumn, sortOrder, rawSearch])
+
+  useEffect(() => {
+    if (filterKey && filterValue) {
+      setRawSearch({[filterKey]: filterValue});
+    } else {
+      setRawSearch({});
+    }
+    setPage(1)
+  }, [filterKey, filterValue])
 
   return (
     <>
@@ -91,7 +84,7 @@ export default function CasesTable ({ vision }: { vision: TVisions}) {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              {(vision === Visions.CLIENT_CASES ? headersClient : headersLawyer).map(({ key, label }) => (
+              {(vision === Visions.CLIENT_CASES ? HEADERS_CLIENT : HEADERS_LAWYER).map(({ key, label }) => (
                 <TableCell key={key}>
                   <TableSortLabel
                     active={sortColumn === key}

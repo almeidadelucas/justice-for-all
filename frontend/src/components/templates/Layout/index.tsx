@@ -27,7 +27,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       )}
       <Box sx={{
         width: '100vw',
-        height: `calc(100vh - ${ref.current?.clientHeight || 0}px)`,
+        minHeight: `calc(100vh - ${ref.current?.clientHeight || 0}px)`,
         display: 'flex',
         padding: '2rem 4rem '
       }}>
