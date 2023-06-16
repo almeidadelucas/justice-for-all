@@ -35,7 +35,7 @@ export function SignupForm() {
 	const { lastNameInputProps } = useValidateLastName(register);
 	const { cpfInputProps } = useValidateCpf(register);
 	const { oabInputProps } = useValidateOab(register);
-	const passwordRegister = useValidatePassword(register);
+	const { passwordInputProps } = useValidatePassword(register);
 
 	const onSubmit = (data: IFormValues) => {
 		fetch('http://localhost:8080/user', {
@@ -109,7 +109,7 @@ export function SignupForm() {
 					type="password"
 					error={!!errors.password}
 					helperText={errors.password?.message as string}
-					{...passwordRegister}
+					{...passwordInputProps}
 				/>
 				<Controller
 					name='type'
