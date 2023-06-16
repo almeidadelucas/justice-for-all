@@ -66,7 +66,7 @@ export default function CasesTable ({ vision }: { vision: TVisions}) {
     if (vision === Visions.LAWYER_CASES) {
       params.lawyerId = loggedUser?.userId
     } else if (vision === Visions.OPENED_CASES) {
-      params.opened = true
+      params.open = true
     } else if (vision === Visions.CLIENT_CASES) {
       params.clientId = loggedUser?.userId
     }

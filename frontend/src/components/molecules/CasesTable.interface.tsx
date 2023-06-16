@@ -8,7 +8,7 @@ export interface IFiltersParams {
   size?: number;
   clientId?: number;
   lawyerId?: number;
-  opened?: boolean;
+  open?: boolean;
   sort_by?: string;
   order_by?: 'asc' | 'desc';
 }
