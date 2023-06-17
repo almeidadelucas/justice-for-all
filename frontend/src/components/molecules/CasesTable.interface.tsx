@@ -1,25 +1,25 @@
 export const HEADERS_LAWYER = [
-	{ key: 'case_id', label: 'ID do caso' },
-	{ key: 'user_id', label: 'ID do cliente' },
-	{ key: 'category', label: 'Categoria' },
-	{ key: 'title', label: 'Título' },
-	{ key: 'description', label: 'Descrição' },
-	{ key: 'alegation', label: 'Alegação' },
-]
+  { key: 'case_id', label: 'ID do caso' },
+  { key: 'user_id', label: 'ID do cliente' },
+  { key: 'category', label: 'Categoria' },
+  { key: 'title', label: 'Título' },
+  { key: 'description', label: 'Descrição' },
+  { key: 'alegation', label: 'Alegação' },
+];
 
 export const HEADERS_CLIENT = [
-	{ key: 'case_id', label: 'ID do caso' },
-	{ key: 'lawyer_id', label: 'ID do advogado' },
-	{ key: 'category', label: 'Categoria' },
-	{ key: 'title', label: 'Título' },
-	{ key: 'description', label: 'Descrição' },
-	{ key: 'alegation', label: 'Alegação' },
-]
+  { key: 'case_id', label: 'ID do caso' },
+  { key: 'lawyer_id', label: 'ID do advogado' },
+  { key: 'category', label: 'Categoria' },
+  { key: 'title', label: 'Título' },
+  { key: 'description', label: 'Descrição' },
+  { key: 'alegation', label: 'Alegação' },
+];
 
 export const Allegation = {
-	INNOCENT: 'INNOCENT',
-	GUITY: 'GUITY'
-}
+  INNOCENT: 'INNOCENT',
+  GUITY: 'GUITY',
+};
 
 export interface IFiltersParams {
   page?: number;
@@ -32,7 +32,7 @@ export interface IFiltersParams {
 }
 
 export interface ICase {
-	caseId: number;
+  caseId: number;
   userId: number;
   lawyerId: number;
   title: string;

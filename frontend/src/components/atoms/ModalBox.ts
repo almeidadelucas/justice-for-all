@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { Box } from '@mui/material';
 
-
 export const ModalBox = styled(Box)`
   position: absolute;
   top: 50%;
