@@ -11,6 +11,7 @@ import ReceivedProposalModal from "./ReceivedProposalModal";
 
 export default function CasesTable ({ vision, filterKey, filterValue }: { vision: TVisions; filterKey: string; filterValue: string }) {
   const { token, loggedUser } = useContext(AuthContext);
+
 	const [cases, setCases] = useState<ICase[]>([]);
   const [sortColumn, setSortColumn] = useState('case_id');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');

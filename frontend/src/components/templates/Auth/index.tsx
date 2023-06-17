@@ -8,9 +8,10 @@ export function withAuth(WrappedComponent: React.ComponentType) {
 		const { token } = useContext(AuthContext);
 
 		useEffect(() => {
-			if (!token) {
+			if (!token && !window.sessionStorage.getItem('token')) {
 				router.push('/login');
 			}
+
 		}, [token, router]);
 
 

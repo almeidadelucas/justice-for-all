@@ -48,7 +48,7 @@ export function LoginForm() {
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		if (validate()) {
-			const loggedIn = await login(user.email, user.password);
+			const loggedIn = await login({ email: user.email, password: user.password });
 			if (!loggedIn) {
 				alert('Usuário ou senha incorretos');
 			} else {

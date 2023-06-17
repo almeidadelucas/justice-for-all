@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
 interface ILoggedUser {
@@ -8,7 +9,7 @@ interface ILoggedUser {
 
 interface AuthContextData {
   token: string | null;
-  login: (email: string, password: string) => Promise<boolean>;
+  login: (input: ILogin) => Promise<boolean>;
   logout: () => void;
 	isLogged: boolean
 	loggedUser: ILoggedUser | null;
@@ -16,6 +17,12 @@ interface AuthContextData {
 
 interface AuthProviderProps {
   children: ReactNode;
+}
+
+interface ILogin {
+	email?: string;
+	password?: string
+	token?: string;
 }
 
 export const AuthContext = createContext<AuthContextData>({
@@ -29,6 +36,8 @@ export const AuthContext = createContext<AuthContextData>({
 
 export function AuthProvider({ children }: AuthProviderProps) {
 	const [token, setToken] = useState<string | null>(null);
+	const { push } = useRouter();
+
 	const [isLogged, setIsLogged] = useState(false);
 	const [loggedUser, setLoggedUser] = useState(null);
 
@@ -37,12 +46,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
 	})
 
 	useEffect(() => {
-		setIsLogged(!!token);
-	}, [token])
+		const recoveredToken = window.sessionStorage.getItem('token');
+		if (recoveredToken !== null) {
+			login({ token: recoveredToken })
+			push('/');
+		}
+	}, [])
 
-	const login = async (email: string, password: string) => {
+	const login = async ({ email, password, token }: ILogin) => {
 		try {
-			const newToken = Buffer.from(`${email}:${password}`).toString('base64');
+			const newToken = token || Buffer.from(`${email}:${password}`).toString('base64');
 			const response = await axiosInstance.post('/login', {}, {
 				headers: {
 					Authorization: `Basic ${newToken}`
@@ -50,8 +63,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 			});
 
 			if (response.status === 200) {
+				window.sessionStorage.setItem('token', newToken);
 				setToken(newToken);
 				setLoggedUser(response.data)
+				setIsLogged(true);
 				return true;
 			} else {
 				return false;
@@ -68,6 +83,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 	const logout = () => {
 		setLoggedUser(null)
 		setToken(null);
+		setIsLogged(false);
+		window.sessionStorage.removeItem('token');
 	};
 
 	return (
@@ -78,3 +95,4 @@ export function AuthProvider({ children }: AuthProviderProps) {
 }
 
 export const useAuth = () => useContext(AuthContext);
+

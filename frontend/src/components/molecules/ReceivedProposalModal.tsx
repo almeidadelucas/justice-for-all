@@ -11,7 +11,7 @@ interface IReceivedProposalModal {
   onClose: () => void;
 }
 
-interface IProposal {
+export interface IProposal {
   lawyerId: number;
   lawyerFirstName: string;
   lawyerLastName: string;
