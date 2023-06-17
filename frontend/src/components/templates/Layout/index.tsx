@@ -17,6 +17,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <Toolbar>
               <Button color="inherit" onClick={() => push('/')}>Home</Button>
               <Button color="inherit" onClick={() => push('/show_cases')}>Listagem de casos</Button>
+              <Button color="inherit" onClick={() => push('/create_case')}>Cadastrar um caso</Button>
               <Box sx={{ flexGrow: 1 }} />
               <IconButton color="inherit" onClick={logout}>
                 <LogoutIcon />
