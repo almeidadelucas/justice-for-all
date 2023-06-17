@@ -24,7 +24,7 @@ export const Allegation = {
 export interface IFiltersParams {
   page?: number;
   size?: number;
-  clientId?: number;
+  userId?: number;
   lawyerId?: number;
   open?: boolean;
   sort_by?: string;

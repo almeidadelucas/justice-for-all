@@ -1,9 +1,13 @@
 import { AuthContext } from "@/context/AuthContext";
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel } from "@mui/material";
+import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Tooltip } from "@mui/material";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { ICase, TVisions, Visions } from "../organisms/ShowCasesPage.interfaces";
 import { Allegation, HEADERS_CLIENT, HEADERS_LAWYER, IFiltersParams } from "./CasesTable.interface";
+import AdsClickIcon from '@mui/icons-material/AdsClick';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import ProposalModal from "./ProposalModal";
+import ReceivedProposalModal from "./ReceivedProposalModal";
 
 export default function CasesTable ({ vision, filterKey, filterValue }: { vision: TVisions; filterKey: string; filterValue: string }) {
   const { token, loggedUser } = useContext(AuthContext);
@@ -14,6 +18,10 @@ export default function CasesTable ({ vision, filterKey, filterValue }: { vision
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [rawSearch, setRawSearch] = useState({});
+
+  const [caseId, setCaseId] = useState<number>();
+  const [showProposalModal, setShowProposalModal] = useState(false);
+  const [showReceivedProposalModal, setShowReceivedProposalModal] = useState(false);
 
   const axiosInstance = axios.create({
     baseURL: process.env.JUSTICE_FOR_ALL_API_URL,
@@ -52,7 +60,7 @@ export default function CasesTable ({ vision, filterKey, filterValue }: { vision
     } else if (vision === Visions.OPENED_CASES) {
       params.open = true
     } else if (vision === Visions.CLIENT_CASES) {
-      params.clientId = loggedUser?.userId
+      params.userId = loggedUser?.userId
     }
 
     axiosInstance.get('/case', {
@@ -95,23 +103,47 @@ export default function CasesTable ({ vision, filterKey, filterValue }: { vision
                   </TableSortLabel>
                 </TableCell>
               ))}
+              <TableCell>Ações</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
           {cases.map((_case: ICase) => (
-              <TableRow
-                key={_case.caseId}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {_case.caseId}
-                </TableCell>
-                <TableCell>{_case.userId}</TableCell>
-                <TableCell>{_case.category}</TableCell>
-                <TableCell>{_case.title}</TableCell>
-                <TableCell>{_case.description}</TableCell>
-                <TableCell>{_case.alegation === Allegation.GUITY ? 'Culpado' : 'Inocente' }</TableCell>
-              </TableRow>
+            <TableRow
+              key={_case.caseId}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {_case.caseId}
+              </TableCell>
+              <TableCell>{_case.userId}</TableCell>
+              <TableCell>{_case.category}</TableCell>
+              <TableCell>{_case.title}</TableCell>
+              <TableCell>{_case.description}</TableCell>
+              <TableCell>{_case.alegation === Allegation.GUITY ? 'Culpado' : 'Inocente' }</TableCell>
+              <TableCell>
+                {vision === Visions.CLIENT_CASES ? (
+                  <Tooltip title="Visualizar propostas">
+                    <IconButton type="button" sx={{ p: '10px' }} onClick={() => {
+                      setCaseId(_case.caseId);
+                      setShowReceivedProposalModal(true);
+                      }
+                    }>
+                      <VisibilityIcon />
+                    </IconButton> 
+                  </Tooltip>
+                ): (
+                  <Tooltip title="Enviar proposta">
+                    <IconButton type="button" sx={{ p: '10px' }} onClick={() => {
+                      setCaseId(_case.caseId);
+                      setShowProposalModal(true);
+                      }
+                    }>
+                      <AdsClickIcon />
+                    </IconButton>
+                  </Tooltip>
+                )}
+              </TableCell>
+            </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -125,6 +157,8 @@ export default function CasesTable ({ vision, filterKey, filterValue }: { vision
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      <ProposalModal caseId={caseId} open={showProposalModal} onClose={() => setShowProposalModal(false)} />
+      <ReceivedProposalModal caseId={caseId} open={showReceivedProposalModal} onClose={() => setShowReceivedProposalModal(false)} />
     </>
   )
 }
