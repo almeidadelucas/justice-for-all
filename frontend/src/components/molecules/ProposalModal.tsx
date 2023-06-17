@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Modal, Typography } from "@mui/material";
 import { ModalBox } from "../atoms/ModalBox";
 import axios from "axios";
 import { AuthContext } from "@/context/AuthContext";
@@ -12,6 +12,7 @@ interface IProposalModal {
 }
 
 export default function ProposalModal({ caseId, open, onClose }: IProposalModal) {
+  const [loading, setLoading] = useState(true);
   const { token, loggedUser } = useContext(AuthContext);
   const [hasProposal, setHasProposal] = useState(false);
 
@@ -35,15 +36,20 @@ export default function ProposalModal({ caseId, open, onClose }: IProposalModal)
   }
   
   const handleGetProposal = async () => {
+    setLoading(true);
     try {
       const res = await axiosInstance.get(`/proposal/case/${caseId}`);
       if (res.status === 200) {
-        const proposal = res.data.proposals.has((p: IProposal) => p.lawyerId === loggedUser?.userId);
+        console.log(res.data)
+        const proposal = res.data.proposals.some((p: IProposal) => p.lawyerId === loggedUser?.userId);
         setHasProposal(proposal);
       }
     } catch(err) {
       console.error('Error to find proposal: ', err)
       alert('Erro ao buscar proposta')
+      onClose()
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -56,7 +62,8 @@ export default function ProposalModal({ caseId, open, onClose }: IProposalModal)
   return (
     <Modal open={open} onClose={onClose}>
       <ModalBox display="flex" flexDirection="column" rowGap="1rem">
-        {hasProposal ?
+        {loading ? <CircularProgress /> : (
+          hasProposal ?
           <Typography>Você já enviou uma proposta</Typography> : 
           <>
             <Typography>Deseja enviar uma proposta para ser a pessoa responsável por esse caso?</Typography>
@@ -65,7 +72,7 @@ export default function ProposalModal({ caseId, open, onClose }: IProposalModal)
               <Button variant="contained" onClick={onClose}>Cancelar</Button>
             </Box>
           </>
-        }
+        )}
       </ModalBox>
     </Modal>
   )

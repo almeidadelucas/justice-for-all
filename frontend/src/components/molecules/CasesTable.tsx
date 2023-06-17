@@ -1,5 +1,5 @@
 import { AuthContext } from "@/context/AuthContext";
-import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Tooltip } from "@mui/material";
+import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Tooltip, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { ICase, TVisions, Visions } from "../organisms/ShowCasesPage.interfaces";
@@ -8,6 +8,7 @@ import AdsClickIcon from '@mui/icons-material/AdsClick';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ProposalModal from "./ProposalModal";
 import ReceivedProposalModal from "./ReceivedProposalModal";
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 export default function CasesTable ({ vision, filterKey, filterValue }: { vision: TVisions; filterKey: string; filterValue: string }) {
   const { token, loggedUser } = useContext(AuthContext);
@@ -15,7 +16,7 @@ export default function CasesTable ({ vision, filterKey, filterValue }: { vision
 	const [cases, setCases] = useState<ICase[]>([]);
   const [sortColumn, setSortColumn] = useState('case_id');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [rawSearch, setRawSearch] = useState({});
@@ -47,7 +48,7 @@ export default function CasesTable ({ vision, filterKey, filterValue }: { vision
     }
   };
 
-  useEffect(() => {
+  const fetchCases = async () => {
     const params: IFiltersParams = {
       page,
       size: rowsPerPage,
@@ -64,18 +65,23 @@ export default function CasesTable ({ vision, filterKey, filterValue }: { vision
       params.userId = loggedUser?.userId
     }
 
-    axiosInstance.get('/case', {
-      params
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          setCases(res.data.cases)
-          setTotalPages(res.data.totalPages)
-        }
-      }).catch(err => {
-        console.error(err)
-        alert('Erro ao buscar casos')
+    try {
+      const res = await axiosInstance.get('/case', {
+        params
       })
+
+      if (res.status === 200) {
+        setCases(res.data.cases)
+        setTotalPages(res.data.totalPages)
+      }
+    } catch(err) {
+      console.log(err);
+      alert('Erro ao buscar casos');
+    }
+  }
+  
+  useEffect(() => {
+    fetchCases()
   }, [vision, page, rowsPerPage, sortColumn, sortOrder, rawSearch])
 
   useEffect(() => {
@@ -108,6 +114,15 @@ export default function CasesTable ({ vision, filterKey, filterValue }: { vision
             </TableRow>
           </TableHead>
           <TableBody>
+          {cases.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={7}>
+                <Typography variant="body1" align="center">
+                  Nenhum caso encontrado
+                </Typography>
+              </TableCell>
+            </TableRow>
+          )}
           {cases.map((_case: ICase) => (
             <TableRow
               key={_case.caseId}
@@ -122,7 +137,7 @@ export default function CasesTable ({ vision, filterKey, filterValue }: { vision
               <TableCell>{_case.description}</TableCell>
               <TableCell>{_case.alegation === Allegation.GUITY ? 'Culpado' : 'Inocente' }</TableCell>
               <TableCell>
-                {vision === Visions.CLIENT_CASES ? (
+                {vision === Visions.CLIENT_CASES && _case.open && (
                   <Tooltip title="Visualizar propostas">
                     <IconButton type="button" sx={{ p: '10px' }} onClick={() => {
                       setCaseId(_case.caseId);
@@ -132,7 +147,15 @@ export default function CasesTable ({ vision, filterKey, filterValue }: { vision
                       <VisibilityIcon />
                     </IconButton> 
                   </Tooltip>
-                ): (
+                )}
+                {vision === Visions.CLIENT_CASES && !_case.open && (
+                  <Tooltip title="Proposta aceita">
+                    <IconButton type="button" sx={{ p: '10px' }}>
+                      <InfoOutlinedIcon/>
+                    </IconButton>
+                  </Tooltip>
+                )}
+                {vision === Visions.OPENED_CASES && (
                   <Tooltip title="Enviar proposta">
                     <IconButton type="button" sx={{ p: '10px' }} onClick={() => {
                       setCaseId(_case.caseId);
@@ -158,8 +181,19 @@ export default function CasesTable ({ vision, filterKey, filterValue }: { vision
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <ProposalModal caseId={caseId} open={showProposalModal} onClose={() => setShowProposalModal(false)} />
-      <ReceivedProposalModal caseId={caseId} open={showReceivedProposalModal} onClose={() => setShowReceivedProposalModal(false)} />
+      <ProposalModal
+        caseId={caseId}
+        open={showProposalModal}
+        onClose={() => setShowProposalModal(false)}
+      />
+      <ReceivedProposalModal
+        caseId={caseId}
+        open={showReceivedProposalModal}
+        onClose={() => {
+          setShowReceivedProposalModal(false);
+          fetchCases();
+        }}
+      />
     </>
   )
 }

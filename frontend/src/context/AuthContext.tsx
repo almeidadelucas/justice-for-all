@@ -36,7 +36,6 @@ export const AuthContext = createContext<AuthContextData>({
 
 export function AuthProvider({ children }: AuthProviderProps) {
 	const [token, setToken] = useState<string | null>(null);
-	const { push } = useRouter();
 
 	const [isLogged, setIsLogged] = useState(false);
 	const [loggedUser, setLoggedUser] = useState(null);
@@ -48,8 +47,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 	useEffect(() => {
 		const recoveredToken = window.sessionStorage.getItem('token');
 		if (recoveredToken !== null) {
-			login({ token: recoveredToken })
-			push('/');
+			login({ token: recoveredToken });	
 		}
 	}, [])
 

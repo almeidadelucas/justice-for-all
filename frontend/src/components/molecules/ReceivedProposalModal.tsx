@@ -46,7 +46,7 @@ export default function ReceivedProposalModal({ caseId, open, onClose }: IReceiv
   return (
     <Modal open={open} onClose={onClose}>
       <ModalBox display="flex" flexDirection="column" rowGap="1rem">
-        <Typography>Qual proposta deseja aceitar?</Typography>
+        <Typography>{proposals.length > 0 ? 'Qual proposta deseja aceitar?' : 'Nenhum proposta recebida'}</Typography>
         <Box display="flex" flexDirection="row" rowGap="gap" gap="2rem">
           {proposals.map(proposal => <ProposalCard key={proposal.lawyerId} proposal={proposal} caseId={caseId as number} onAccept={onClose} />)}
         </Box>
