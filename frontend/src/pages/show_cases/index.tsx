@@ -3,7 +3,7 @@ import { withAuth } from '@/components/templates/Auth';
 import React from 'react';
 
 function ShowCases() {
-	return <ShowCasesPage type="LAWYER" />;
+  return <ShowCasesPage />;
 }
 
 export default withAuth(ShowCases);
