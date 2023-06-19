@@ -20,11 +20,13 @@
 		"@types/react-dom": "18.0.11",
 		"axios": "^1.4.0",
 		"eslint-config-next": "13.3.0",
+		"filestack-react": "^4.0.1",
 		"next": "13.3.0",
 		"next-auth": "^4.22.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-hook-form": "^7.44.3",
+		"react-hot-toast": "^2.4.1",
 		"typescript": "5.0.4"
 	},
 	"devDependencies": {
