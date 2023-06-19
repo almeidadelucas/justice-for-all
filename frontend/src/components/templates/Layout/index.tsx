@@ -1,12 +1,12 @@
 import React, { useContext, useRef } from 'react';
-import { AppBar, Box, Button, IconButton, Toolbar } from "@mui/material";
+import { AppBar, Box, Button, IconButton, Toolbar } from '@mui/material';
 import { AuthContext } from '@/context/AuthContext';
 import { useRouter } from 'next/router';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { isLogged, logout } = useContext(AuthContext); 
-	const { push } = useRouter();
+  const { isLogged, logout } = useContext(AuthContext);
+  const { push } = useRouter();
   const ref = useRef<HTMLDivElement>(null);
 
   return (
@@ -26,14 +26,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </AppBar>
         </Box>
       )}
-      <Box sx={{
-        width: '100vw',
-        height: `calc(100vh - ${ref.current?.clientHeight || 0}px)`,
-        display: 'flex',
-        padding: '2rem 4rem '
-      }}>
+      <Box
+        sx={{
+          width: '100vw',
+          minHeight: `calc(100vh - ${ref.current?.clientHeight || 0}px)`,
+          display: 'flex',
+          padding: '2rem 4rem ',
+        }}
+      >
         {children}
       </Box>
     </>
-  )
+  );
 }

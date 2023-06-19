@@ -3,23 +3,22 @@ import React, { useRouter } from 'next/router';
 import { useContext, useEffect } from 'react';
 
 export function withAuth(WrappedComponent: React.ComponentType) {
-	const WithAuth: React.FC = (props) => {
-		const router = useRouter();
-		const { token } = useContext(AuthContext);
+  const WithAuth: React.FC = (props) => {
+    const router = useRouter();
+    const { token } = useContext(AuthContext);
 
-		useEffect(() => {
-			if (!token) {
-				router.push('/login');
-			}
-		}, [token, router]);
+    useEffect(() => {
+      if (!token && !window.sessionStorage.getItem('token')) {
+        router.push('/login');
+      }
+    }, [token, router]);
 
+    if (!token) {
+      return null;
+    }
 
-		if (!token) {
-			return null;
-		}
-	
-		return <WrappedComponent {...props} />;
-	};
+    return <WrappedComponent {...props} />;
+  };
 
-	return WithAuth;
+  return WithAuth;
 }

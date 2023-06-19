@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Form = styled.form`
-	display: flex;
-	flex-direction: column;
-	row-gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
 `;
