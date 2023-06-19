@@ -52,6 +52,13 @@ export function CreateCaseForm() {
     open: true
   });
 
+  useEffect(() => {
+    setCase((current) => ({
+      ...current,
+      alegation: 'INNOCENT',
+    }));
+  }, []);
+
   const validate = () => {
     let isValid: boolean = true;
     const errors: Partial<createCaseCommand> = {};
@@ -171,9 +178,9 @@ export function CreateCaseForm() {
               labelId="alegacao-label"
               id="alegacao-select"
               name='alegation'
-              value='INNOCENT'
               onChange={handleChange}
               fullWidth
+              value={caseData.alegation}
             >
               <MenuItem value="INNOCENT">Inocente</MenuItem>
               <MenuItem value="GUITY">Culpado</MenuItem>
