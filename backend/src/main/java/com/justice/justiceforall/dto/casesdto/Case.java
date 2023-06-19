@@ -14,7 +14,6 @@ public record Case(
         String description,
         Alegation alegation,
         String evidencesPDF,
-        String evidencesImages,
         String caseIdentifier,
         boolean open
 ) {

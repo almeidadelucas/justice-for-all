@@ -12,7 +12,6 @@ public record CreateCaseCommand(
         String description,
         Alegation alegation,
         String evidencesPDF,
-        String evidenceImage,
         String caseIdentifier,
         boolean open
 ) {

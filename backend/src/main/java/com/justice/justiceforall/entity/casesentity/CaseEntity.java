@@ -42,9 +42,6 @@ public class CaseEntity {
     @Column(name = "evidences_pdf", length = 120)
     private String evidencesPdf;
 
-    @Column(name = "evidence_image", length = 120)
-    private String evidenceImage;
-
     @Column(name = "case_identifier", nullable = false, length = 120)
     private String caseIdentifier;
 
