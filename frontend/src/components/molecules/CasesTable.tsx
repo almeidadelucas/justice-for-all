@@ -183,7 +183,9 @@ export default function CasesTable({
                     : 'Inocente'}
                 </TableCell>
                 <TableCell>
-                  <EditCaseForm id={_case.caseId} caseDataOriginal={_case}></EditCaseForm>
+                {vision === Visions.CLIENT_CASES && _case.open && (
+                  <EditCaseForm id={_case.caseId} caseDataOriginal={_case}></EditCaseForm>)
+                }
                 </TableCell>
                 <TableCell>
                       {_case.evidencesPDF && (

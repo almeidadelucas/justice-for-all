@@ -166,7 +166,7 @@ export function EditCaseForm({ id, caseDataOriginal } : EditCaseFormProps) {
     return (
         <div>
             <Button variant="contained" color="primary" onClick={handleOpen}>
-                Abrir modal
+                Editar caso
             </Button>
             <Modal open={open} onClose={handleClose}>
             <Box
