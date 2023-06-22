@@ -2,6 +2,7 @@ import React from 'react';
 import { CreateCaseForm } from '../molecules/CreateCaseForm';
 import { CenteredContainer } from '@/components/molecules/CenteredContainer';
 import { Box } from '@mui/material';
+import { EditCaseForm } from '../molecules/EditCaseForm';
 
 export default function CreateCasePage() {
 	return (
@@ -14,7 +15,7 @@ export default function CreateCasePage() {
           rowGap: '2rem',
           width: '100%'
         }}>
-			<CreateCaseForm />
+			<CreateCaseForm/>
 		</Box>
 	);
 }

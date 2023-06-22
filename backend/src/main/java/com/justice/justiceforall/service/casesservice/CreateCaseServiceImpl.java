@@ -26,7 +26,7 @@ public class CreateCaseServiceImpl{
                   createCaseCommand.title(),
                   createCaseCommand.category()
             );
-            CreateCaseValidator.validateNewCase(createCaseCommand);
+            CreateCaseValidator.validateCase(createCaseCommand);
             var savedEntity = casesRepository.save(util.getCaseEntity(createCaseCommand));
             logger.info("Created a new Case with ID {}", savedEntity.getId());
             return util.getCaseFromEntity(savedEntity);
