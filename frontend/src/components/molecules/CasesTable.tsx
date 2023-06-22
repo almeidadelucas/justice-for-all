@@ -34,6 +34,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import ProposalModal from './ProposalModal';
 import ReceivedProposalModal from './ReceivedProposalModal';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { EditCaseForm } from './EditCaseForm';
 
 export default function CasesTable({
   vision,
@@ -149,6 +150,7 @@ export default function CasesTable({
                   </TableSortLabel>
                 </TableCell>
               ))}
+              <TableCell>Editar</TableCell>
               <TableCell>Arquivos</TableCell>
               <TableCell>Ações</TableCell>
             </TableRow>
@@ -179,6 +181,9 @@ export default function CasesTable({
                   {_case.alegation === Allegation.GUITY
                     ? 'Culpado'
                     : 'Inocente'}
+                </TableCell>
+                <TableCell>
+                  <EditCaseForm id={_case.caseId} caseDataOriginal={_case}></EditCaseForm>
                 </TableCell>
                 <TableCell>
                       {_case.evidencesPDF && (

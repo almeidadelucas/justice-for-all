@@ -7,10 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.justice.justiceforall.dto.casesdto.Case;
 import com.justice.justiceforall.dto.casesdto.CreateCaseCommand;
+import com.justice.justiceforall.dto.casesdto.EditCaseCommand;
 import com.justice.justiceforall.dto.casesdto.FilterCasesRequest;
 
 @Service
 public class CaseServiceImpl implements CaseService {
+
+  @Autowired
+  private EditCaseServiceImpl editCaseServiceImpl;
 
   @Autowired
   private CreateCaseServiceImpl createCaseService;
@@ -41,6 +45,11 @@ public class CaseServiceImpl implements CaseService {
   @Override
   public FilteredCases getFilteredCases(FilterCasesRequest filterCasesRequest) {
     return recoverCaseService.getFilteredCases(filterCasesRequest);
+  }
+
+  @Override
+  public Case editCase(EditCaseCommand editCaseCommand) {
+    return editCaseServiceImpl.editCase(editCaseCommand);
   }
 }
 
