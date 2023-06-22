@@ -1,3 +1,6 @@
+import { FileLink } from 'filestack-react';
+import GetAppIcon from '@mui/icons-material/GetApp';
+
 import { AuthContext } from '@/context/AuthContext';
 import {
   IconButton,
@@ -146,6 +149,7 @@ export default function CasesTable({
                   </TableSortLabel>
                 </TableCell>
               ))}
+              <TableCell>Arquivos</TableCell>
               <TableCell>Ações</TableCell>
             </TableRow>
           </TableHead>
@@ -175,6 +179,18 @@ export default function CasesTable({
                   {_case.alegation === Allegation.GUITY
                     ? 'Culpado'
                     : 'Inocente'}
+                </TableCell>
+                <TableCell>
+                      {_case.evidencesPDF && (
+                        <IconButton
+                          component="a"
+                          href={_case.evidencesPDF}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <GetAppIcon />
+                        </IconButton>
+                      )}
                 </TableCell>
                 <TableCell>
                   {vision === Visions.CLIENT_CASES && _case.open && (

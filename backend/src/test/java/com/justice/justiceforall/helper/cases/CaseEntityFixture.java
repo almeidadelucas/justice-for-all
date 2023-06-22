@@ -20,7 +20,6 @@ public class CaseEntityFixture {
                         + "sem provas conclusivas",
                 Alegation.INNOCENT,
                 "https://cdn.filestackcontent.com/AFrHW1QRsWxmu5ZLU2qg",
-                "https://cdn.filestackcontent.com/AFrH432W1Q432u5ZL432",
                 "4243243243-56.2023.4.04.7000",
                 true
         );
@@ -38,7 +37,6 @@ public class CaseEntityFixture {
                         + "sem provas conclusivas",
                 Alegation.INNOCENT,
                 "https://cdn.filestackcontent.com/AFrHW1QRsWxmu5ZLU2qg",
-                "https://cdn.filestackcontent.com/AFrH432W1Q432u5ZL432",
                 "4243243243-56.2023.4.04.7000",
                 true
         );

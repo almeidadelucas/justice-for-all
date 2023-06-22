@@ -16,7 +16,6 @@ public class CaseUtil {
                   .description(createCaseCommand.description())
                   .alegation(createCaseCommand.alegation())
                   .evidencesPdf(createCaseCommand.evidencesPDF())
-                  .evidenceImage(createCaseCommand.evidenceImage())
                   .caseIdentifier(createCaseCommand.caseIdentifier())
                   .open(createCaseCommand.open())
                   .build();
@@ -32,7 +31,6 @@ public class CaseUtil {
                   entity.getDescription(),
                   entity.getAlegation(),
                   entity.getEvidencesPdf(),
-                  entity.getEvidenceImage(),
                   entity.getCaseIdentifier(),
                   entity.isOpen()
             );
