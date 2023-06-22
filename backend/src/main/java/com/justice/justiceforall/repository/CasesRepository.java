@@ -2,6 +2,7 @@ package com.justice.justiceforall.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -19,9 +20,9 @@ public interface CasesRepository extends CrudRepository<CaseEntity, Long> {
             "(:userId is null or c.user_id = :userId) AND " +
             "(:lawyerId is null or c.lawyer_id = :lawyerId) AND " +
             "(:category is null or c.category ilike :category) AND " +
-            "(:description is null or lower(c.description) SIMILAR TO '%(' || REPLACE(lower(:description), ' ', '%') || ')%');",
+            "(:description is null or lower(c.description) SIMILAR TO '%(' || REPLACE(lower(:description), ' ', '%') || ')%')",
             nativeQuery = true)
-    List<CaseEntity> filterCases(
+    Page<CaseEntity> filterCases(
             @Param("open") Boolean open,
             @Param("userId") Long userId,
             @Param("lawyerId") Long lawyerId,

@@ -8,15 +8,18 @@ interface ICenteredContainerProps {
   children: JSX.Element;
 }
 
-export function CenteredContainer({ title, children }: ICenteredContainerProps) {
-	return (
-		<CenteredBox>
-			<BorderedBox flexDirection="column">
-				<Typography variant="h4" component="h1" sx={{ marginBottom: '1rem' }}>
-					{title}
-				</Typography>
-				{children}
-			</BorderedBox>
-		</CenteredBox>
-	);
+export function CenteredContainer({
+  title,
+  children,
+}: ICenteredContainerProps) {
+  return (
+    <CenteredBox>
+      <BorderedBox flexDirection="column">
+        <Typography variant="h4" component="h1" sx={{ marginBottom: '1rem' }}>
+          {title}
+        </Typography>
+        {children}
+      </BorderedBox>
+    </CenteredBox>
+  );
 }

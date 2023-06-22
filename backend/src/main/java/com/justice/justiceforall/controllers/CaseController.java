@@ -5,8 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.justice.justiceforall.constants.AttributeConstants;
-import com.justice.justiceforall.dto.casesdto.FilterCasesRequest;
-import com.justice.justiceforall.dto.casesdto.FilterPaging;
+import com.justice.justiceforall.dto.casesdto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.justice.justiceforall.annotation.EndpointAuthentication;
 import com.justice.justiceforall.config.AuthenticationType;
-import com.justice.justiceforall.dto.casesdto.Case;
-import com.justice.justiceforall.dto.casesdto.CreateCaseCommand;
 import com.justice.justiceforall.service.casesservice.CaseService;
 
 @RestController
@@ -46,17 +43,19 @@ public class CaseController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @EndpointAuthentication(authenticationType = AuthenticationType.AUTHENTICATED)
-    public final List<Case> getCases(
+    public final FilteredCases getCases(
             @RequestParam(name = "open", required = false) Boolean open,
             @RequestParam(name = "userId", required = false) Long userId,
             @RequestParam(name = "lawyerId", required = false) Long lawyerId,
             @RequestParam(name = "category", required = false) String category,
             @RequestParam(name = "description", required = false) String description,
             @RequestParam(name = "page", required = false, defaultValue = "1") int pageNumber,
-            @RequestParam(name = "size", required = false, defaultValue = "10") int pageSize
+            @RequestParam(name = "size", required = false, defaultValue = "10") int pageSize,
+            @RequestParam(name = "sort_by", required = false, defaultValue = "case_id") String sortBy,
+            @RequestParam(name = "order_by", required = false, defaultValue = "asc") String orderBy
     ) {
         var filterCasesRequest = new FilterCasesRequest(open, userId, lawyerId, category, description,
-                new FilterPaging(pageNumber, pageSize));
+                new FilterPaging(pageNumber, pageSize, sortBy, orderBy));
         return caseService.getFilteredCases(filterCasesRequest);
     }
 
