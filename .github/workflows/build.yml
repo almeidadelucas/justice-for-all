@@ -32,7 +32,7 @@ jobs:
           node-version: 18
 
       - name: Build
-        run: npm i --prefix frontend/
+        run: npm i --force --prefix frontend/
 
       - name: Run tests
         run: npm t --prefix frontend/
