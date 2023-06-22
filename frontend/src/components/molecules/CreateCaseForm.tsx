@@ -19,7 +19,7 @@ interface createCaseCommand {
 
 export function CreateCaseForm() {
   const [formPronto, setFormPronto] = useState(false);
-  const [uploadConcluido, setUploadConcluido] = useState(true); ///////mudar para "false" - agora está em debug
+  const [uploadConcluido, setUploadConcluido] = useState(false);
   const [respostaEnvio, setRespostaEnvio] = useState(Object);
   const { push } = useRouter();
 
